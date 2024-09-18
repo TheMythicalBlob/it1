@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resturang</title>
+    <style>
+      body {
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+      }
+
+      /* Container for bildene som plasserer dem på høyre side av skjermen */
+      .bilde-container {
+        position: fixed;
+        right: 0;
+        top: 0;
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        gap: 20px;
+        background-color: #f9f9f9;
+        height: 100%;
+        overflow-y: auto;
+      }
+
+      img {
+        width: 200px;
+        height: 200px;
+        object-fit: contain;
+        background-color: white;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Registrer deg for mat</h1>
+    <form
+      id="drikkeSkjema"
+      action="Resturang-registrenings-side.html"
+      onsubmit="return validerSkjema()"
+    >
+      <input type="text" name="fornavn" required placeholder="Navnet ditt" />
+      <br />
+      <input
+        type="number"
+        name="alder"
+        required
+        min="0"
+        max="150"
+        step="1"
+        placeholder="Alderen din"
+      />
+
+      <h2>Velg en matrett</h2>
+      <select name="mat" id="matvalg" required onchange="oppdaterBilde()">
+        <option value="">Velg mat</option>
+        <option value="kyllingvinger">Kyllingvinger</option>
+        <option value="spagetthi">Spagetthi</option>
+        <option value="hamburger">Hamburger</option>
+        <option value="grillspyd">Grillspyd</option>
+      </select>
+
+      <br />
+      <h2>Hva ønsker du å drikke?</h2>
+      <select name="brus" id="drikkevalg" onchange="oppdaterBilde();">
+        <option value="">Brus</option>
+        <option value="cola">Cola</option>
+        <option value="fanta">Fanta</option>
+        <option value="sprite">Sprite</option>
+      </select>
+
+      <input
+        type="radio"
+        name="drikke"
+        value="saft"
+        id="radio-saft"
+        onclick="oppdaterBilde();"
+      /><label for="radio-saft">Saft</label>
+
+      <input
+        type="radio"
+        name="drikke"
+        value="vann"
+        id="radio-vann"
+        onclick="oppdaterBilde();"
+      /><label for="radio-vann">Vann</label>
+
+      <br />
+
+      <h2>Velg siderett</h2>
+      <select name="siderett" id="siderett" onchange="oppdaterBilde();">
+        <option value="">Siderett</option>
+        <option value="kake">Kake</option>
+        <option value="kejks">Kjeks</option>
+        <option value="is">Is</option>
+      </select>
+
+      <h2>Tillegs ting?</h2>
+      <!-- Checkboxes for tilleggsvalg -->
+      <input
+        type="checkbox"
+        name="tilleg"
+        value="ketchup"
+        id="checkbox-ketchup"
+        onchange="oppdaterBilde()"
+      />
+      <label for="checkbox-ketchup">Ketchup</label>
+
+      <input
+        type="checkbox"
+        name="tilleg"
+        value="sennep"
+        id="checkbox-sennep"
+        onchange="oppdaterBilde()"
+      />
+      <label for="checkbox-sennep">Sennep</label>
+
+      <br />
+
+      <button type="submit">Send inn</button>
+    </form>
+
+    <!-- Container for alle bildene plassert på høyre side -->
+    <div class="bilde-container">
+      <img id="matbilde" src="" alt="Velg en matrett for å se bilde" />
+      <img id="drikkebilde" src="" alt="Velg en drikke for å se bilde" />
+      <img id="siderettbilde" src="" alt="Velg en siderett for å se bilde" />
+      <img
+        id="tillegsbilde-ketchup"
+        src=""
+        alt="Ketchup"
+        style="display: none"
+      />
+      <img id="tillegsbilde-sennep" src="" alt="Sennep" style="display: none" />
+    </div>
+
+    <script>
+      function oppdaterBilde() {
+        const drikkevalg = document.getElementById("drikkevalg").value;
+        const radioValg = document.querySelector(
+          'input[name="drikke"]:checked'
+        )?.value;
+        const matvalg = document.getElementById("matvalg").value;
+        const siderettValg = document.getElementById("siderett").value;
+        const ketchupValg = document.getElementById("checkbox-ketchup").checked;
+        const sennepValg = document.getElementById("checkbox-sennep").checked;
+
+        const drikkeBildeElement = document.getElementById("drikkebilde");
+        const matBildeElement = document.getElementById("matbilde");
+        const siderettBildeElement = document.getElementById("siderettbilde");
+        const ketchupBildeElement = document.getElementById(
+          "tillegsbilde-ketchup"
+        );
+        const sennepBildeElement = document.getElementById(
+          "tillegsbilde-sennep"
+        );
+
+        // Oppdaterer drikkebildet
+        if (drikkevalg === "cola") {
+          drikkeBildeElement.src = "Bilder/cola.jpg";
+        } else if (drikkevalg === "fanta") {
+          drikkeBildeElement.src = "Bilder/fanta.jpg";
+        } else if (drikkevalg === "sprite") {
+          drikkeBildeElement.src = "Bilder/sprite.jpg";
+        } else if (radioValg === "saft") {
+          drikkeBildeElement.src = "Bilder/saft.jpg";
+        } else if (radioValg === "vann") {
+          drikkeBildeElement.src = "Bilder/vann.png";
+        } else {
+          drikkeBildeElement.src = ""; // Fjerner bilde om ingen drikke er valgt
+        }
+
+        // Oppdaterer matbildet
+        if (matvalg === "kyllingvinger") {
+          matBildeElement.src = "Bilder/kyllingvinger.jpg";
+        } else if (matvalg === "spagetthi") {
+          matBildeElement.src = "Bilder/spagetthi.jpg";
+        } else if (matvalg === "hamburger") {
+          matBildeElement.src = "Bilder/hamburger.jpg";
+        } else if (matvalg === "grillspyd") {
+          matBildeElement.src = "Bilder/grillspyd.jpg";
+        } else {
+          matBildeElement.src = ""; // Fjerner bilde om ingen mat er valgt
+        }
+
+        // Oppdaterer siderettbilde
+        if (siderettValg === "kake") {
+          siderettBildeElement.src = "Bilder/kake.jpg";
+        } else if (siderettValg === "kejks") {
+          siderettBildeElement.src = "Bilder/kjeks.jpg";
+        } else if (siderettValg === "is") {
+          siderettBildeElement.src = "Bilder/is.jpg";
+        } else {
+          siderettBildeElement.src = ""; // Fjerner bilde om ingen siderett er valgt
+        }
+
+        // Oppdaterer tilleggsbilder for ketchup og sennep
+        if (ketchupValg) {
+          ketchupBildeElement.src = "Bilder/ketchup.jpg";
+          ketchupBildeElement.style.display = "block"; // Viser ketchupbilde
+        } else {
+          ketchupBildeElement.style.display = "none"; // Skjuler ketchupbilde
+        }
+
+        if (sennepValg) {
+          sennepBildeElement.src = "Bilder/sennep.jpg";
+          sennepBildeElement.style.display = "block"; // Viser sennepbilde
+        } else {
+          sennepBildeElement.style.display = "none"; // Skjuler sennepbilde
+        }
+      }
+
+      // Funksjon for å nullstille radio-knapper når en brus er valgt
+      function resetRadioButtons() {
+        const radioButtons = document.querySelectorAll('input[name="drikke"]');
+        radioButtons.forEach((radio) => {
+          radio.checked = false;
+        });
+      }
+
+      // Funksjon for å nullstille brusvalg når saft eller vann er valgt
+      function resetSelect() {
+        document.getElementById("drikkevalg").selectedIndex = 0;
+      }
+
+      // Validering av skjema for å kreve valg av drikke
+      function validerSkjema() {
+        const drikkevalg = document.getElementById("drikkevalg").value;
+        const radioValg = document.querySelector(
+          'input[name="drikke"]:checked'
+        )?.value;
+
+        if (!drikkevalg && !radioValg) {
+          alert("Vennligst velg en drikke før du sender inn skjemaet.");
+          return false; // Hindrer skjemaet fra å bli sendt inn
+        }
+
+        return true; // Tillater skjemaet å bli sendt hvis en drikke er valgt
+      }
+    </script>
+  </body>
+</html>
