@@ -10,12 +10,12 @@ body {
 h1 {
   text-align: center;
   margin: 20px 0;
-  color: yellow;
+  color: red;
 }
 
 h2 {
   margin-top: 20px;
-  color: yellow;
+  color: red;
 }
 
 p {
@@ -30,8 +30,8 @@ img {
 
 img[src="westworld_illustrasjonsbilde.jpg"] {
   border-radius: 10px;
-  border: 2px solid yellow;
-  box-shadow: 0px 0px 15px yellow;
+  border: 2px solid red;
+  box-shadow: 0px 0px 15px red;
 }
 
 ul {
@@ -42,19 +42,19 @@ ul {
 
 ul li {
   display: inline-block;
-  margin: 0 10px;
+  margin: 0;
 }
 
 ul li a {
   text-decoration: none;
-  padding: 10px 20px;
-  border: 2px solid yellow;
+  padding: 15px 73px;
+  border: 2px solid red;
   color: white;
   background-color: black;
 }
 
 ul li a:hover {
-  background-color: yellow;
+  background-color: red;
   color: black;
 }
 
@@ -65,6 +65,6 @@ ul li a:active {
 
 a[href="https://westworld.com"]
 {
-  color: yellow;
+  color: red;
   text-decoration: underline;
 }
