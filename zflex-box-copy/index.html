@@ -1,28 +1,68 @@
 <!DOCTYPE html>
 <html lang="nb">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/styles.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/styles.css" />
     <title>Flexbox Copy</title>
     <style>
+      header {
+        background-color: red;
+        background-image: url(images/1920-lush-green-trees-covering-a-forest.jpeg);
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+      h1 {
+        font-size: 4rem;
+      }
+      .first-section {
+        background-color: red;
+        height: 350px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: stretch;
+      }
+      .flex-item {
+        background-color: white;
+        border: solid 2px black;
+        padding: 30px;
+      }
+      .wide-item {
+        flex-grow: 2;
+      }
+      .thin-item {
+        flex-grow: 1;
+      }
+      #ekorn {
+        background-image: url(images/ekorn.jpg);
+        background-size: cover;
+        background-position: center;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <header>
-        <nav>
-            <ul class="navbar">
-                <li>Hjem</li>
-                <li>Nyheter</li>
-                <li>Om oss</li>
-                <li>Kontakt</li>
-            </ul>
-        </nav>
-        <h1>LOGO</h1>
+      <nav>
+        <ul class="navbar">
+          <li>Hjem</li>
+          <li>Nyheter</li>
+          <li>Om oss</li>
+          <li>Kontakt</li>
+        </ul>
+      </nav>
+      <h1>LOGO</h1>
     </header>
     <main>
+      <section class="first-section">
+        <div class="flex-item wide-item" id="ekorn"></div>
+        <div class="flex-item wide-item">b</div>
+        <div class="flex-item thin-item">c</div>
+      </section>
+      <section></section>
     </main>
     <footer>footer</footer>
-</body>
+  </body>
 </html>
