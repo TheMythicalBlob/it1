@@ -1,17 +1,15 @@
-/* Generelle stiler */
 body {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
-  background-color: #1d1c1c;
+  background-color: #022f6d;
 }
 
-/* Header-stil */
 header {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #1d1c1c;
+  background-color: #000000;
   padding: 20px 0;
 }
 
@@ -33,6 +31,7 @@ button {
   font-size: 1rem;
   cursor: pointer;
   text-align: center;
+  width: auto;
 }
 
 button:hover {
@@ -53,4 +52,115 @@ button:hover {
   height: 40px;
   border-radius: 50%;
   cursor: pointer;
+}
+
+/* Horisontal linje */
+.horisontal-linje {
+  position: absolute;
+  width: 100vw;
+  height: 2px;
+  background-color: white;
+  margin: 115px 0 0 0;
+  left: 0;
+}
+
+/* Rektangel med runde kanter */
+.tittel-rektangel {
+  width: auto;
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 20px;
+  margin-bottom: 50px;
+  background-color: white;
+  color: black;
+  border: 4spx solid black;
+  border-radius: 50px;
+  text-align: center;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 1.5rem;
+}
+
+/* Firkanten */
+.firkant {
+  width: 450px;
+  height: 425px;
+  border: 2px solid black;
+  border-radius: 25px;
+  margin-left: 125px;
+  background-color: white;
+}
+
+.firkant-inne-i-firkant {
+  width: 400px;
+  height: 150px;
+  border: 2px solid black;
+  border-radius: 25px;
+  margin-left: 150px;
+  margin-top: -400px;
+  background-color: white;
+}
+
+.liten-firkant-inne-i-firkant {
+  width: 190px;
+  height: 190px;
+  border: 2px solid black;
+  border-radius: 25px;
+  margin-left: 360px;
+  margin-top: -200px;
+  background-color: white;
+}
+
+.bilde-for-firkant {
+  width: 200px;
+  height: auto;
+  border-radius: 25px;
+  margin-left: 150px;
+  margin-top: 20px;
+}
+
+.fordeler-firkant {
+  width: 200px;
+  height: 40px;
+  border: 2px solid black;
+  border-radius: 10px;
+  margin-left: 690px;
+  margin-top: -400px;
+  background-color: white;
+  text-align: center;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 1.5rem;
+}
+
+.ulemper-firkant {
+  width: 200px;
+  height: 40px;
+  border: 2px solid black;
+  border-radius: 10px;
+  margin-left: 935px;
+  margin-top: -44px;
+  background-color: white;
+  text-align: center;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 1.5rem;
+}
+
+.fordeler-firkant-stor {
+  width: 235px;
+  height: 360px;
+  border: 2px solid black;
+  border-radius: 25px;
+  margin-left: 670px;
+  margin-bottom: 0px;
+  margin-top: 20px;
+  background-color: white;
+}
+
+.ulemper-firkant-stor {
+  width: 235px;
+  height: 360px;
+  border: 2px solid black;
+  border-radius: 25px;
+  margin-left: 920px;
+  margin-top: -365px;
+  background-color: white;
 }
