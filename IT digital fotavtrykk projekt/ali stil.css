@@ -1,0 +1,56 @@
+/* Generelle stiler */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #1d1c1c;
+}
+
+/* Header-stil */
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #1d1c1c;
+  padding: 20px 0;
+}
+
+#navigasjon {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+  gap: 20px;
+}
+
+/* Knapper */
+button {
+  background-color: #02076d;
+  color: white;
+  border: 2px solid white;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  text-align: center;
+}
+
+button:hover {
+  background-color: white;
+  color: #02076d;
+  border-color: #02076d;
+}
+
+/* Logo */
+#logo-knapp img {
+  width: 80px;
+  height: auto;
+}
+
+/* Språk-knapp */
+#språk-knapp img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+}
