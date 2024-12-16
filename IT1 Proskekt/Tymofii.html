@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digitalt Fotavtrykk: Etisk Bruk</title>
+    <link rel="stylesheet" href="Tymofii.css">
+</head>
+<body>
+    <header>
+        <div class="header-center">
+            
+            <img src="Bilder/digital-fotavtrykk-logo.jpeg" alt="Logo">
+        </div>
+        <div class="header-right">
+            <a href="#" id="language-button">
+                <span class="icon">&#127760;</span>
+            </a>
+            <div class="language-menu" id="language-menu">
+                <a href="#" data-lang="no">Norsk</a>
+                <a href="#" data-lang="en">English</a>
+                <a href="#" data-lang="es">Español</a>
+                <a href="#" data-lang="ru">Русский</a>
+            </div>
+            
+        </div>
+    </header>
+
+    <section class="banner">
+        <h1 data-key="banner-title">Digitalt Fotavtrykk: Etiske Grenseganger</h1>
+        <p data-key="banner-desc">Utforsk hvordan digital informasjon brukes, og hvor grensen går mellom ansvar og misbruk.</p>
+    </section>
+
+    <main>
+        <section id="intro" class="content">
+            <h2 data-key="intro-title">Hva er et digitalt fotavtrykk?</h2>
+            <p data-key="intro-content">Digitalt fotavtrykk refererer til sporene vi etterlater oss på nettet gjennom vår bruk av sosiale medier, nettsider, apper og andre digitale plattformer. Disse sporene kan gi en detaljert innsikt i våre interesser, vaner og personlige preferanser. De utgjør en del av vår digitale identitet, som stadig blir mer verdifull både for oss selv og for kommersielle aktører.</p>
+            <p data-key="intro-note">En forståelse av hva et digitalt fotavtrykk innebærer, er avgjørende for å navigere sikkert og ansvarlig i den digitale verden.</p>
+        </section>
+
+        <section id="ethical" class="content">
+            <h2 data-key="ethical-title">Etisk bruk av digitalt fotavtrykk</h2>
+            <p data-key="ethical-intro">Bedrifter og myndigheter kan bruke digitalt fotavtrykk på en ansvarlig måte. For eksempel kan det brukes til:</p>
+            <ul>
+                <li data-key="ethical-point1">Forbedring av brukeropplevelser ved å tilby relevante tjenester som er skreddersydd til individuelle behov.</li>
+                <li data-key="ethical-point2">Effektivisering av offentlige tjenester basert på befolkningens behov og forventninger.</li>
+                <li data-key="ethical-point3">Utvikling av produkter som tilpasser seg brukernes ønsker og preferanser, noe som kan øke både tilfredshet og innovasjon.</li>
+            </ul>
+            <p data-key="ethical-conclusion">Når et digitalt fotavtrykk behandles med respekt for personvern og samtykke, kan det bidra til en bedre og mer personlig tilpasset digital opplevelse.</p>
+        </section>
+
+        <section id="unethical" class="content">
+            <h2 data-key="unethical-title">Uetisk bruk av digitalt fotavtrykk</h2>
+            <p data-key="unethical-intro">På den andre siden kan bruk av digitalt fotavtrykk også være problematisk:</p>
+            <ul>
+                <li data-key="unethical-point1">Overvåkning uten samtykke, noe som bryter personvernet og skaper mistillit.</li>
+                <li data-key="unethical-point2">Manipulasjon av brukere gjennom målrettet reklame og desinformasjon, som kan påvirke valg og meninger.</li>
+                <li data-key="unethical-point3">Diskriminering basert på sensitive opplysninger, noe som kan forsterke ulikheter og urettferdighet i samfunnet.</li>
+            </ul>
+            <p data-key="unethical-conclusion">Grensen mellom etisk og uetisk bruk handler ofte om åpenhet, samtykke og respekt for individers rettigheter. Å utfordre uetiske praksiser er viktig for å beskytte både individers frihet og samfunnets tillit til teknologi.</p>
+        </section>
+
+        <section id="video" class="content">
+            <iframe 
+                src="https://www.youtube.com/embed/Ro_LlRg8rGg" 
+                title="Short video 'Four Reasons to Care About Your Digital Footprint'"
+                frameborder="0" 
+                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+            </iframe>
+            <p>Short video: "Four Reasons to Care About Your Digital Footprint"</p>
+        </section>
+        
+
+        <section id="conclusion" class="content">
+            <h2 data-key="conclusion-title">Konklusjon</h2>
+            <p data-key="conclusion-content">Digitalt fotavtrykk spiller en stadig viktigere rolle i våre liv. Det gir både muligheter og utfordringer, avhengig av hvordan det brukes. Ved å være oppmerksom på hvordan våre data blir samlet og brukt, kan vi bidra til en mer etisk og ansvarlig digital fremtid. Samtidig må både bedrifter og myndigheter arbeide for å opprettholde høyest mulig standard for personvern og etikk.</p>
+            <p data-key="conclusion-note">Gjennom samarbeid og bevissthet kan vi balansere nytte og risiko, og sikre at teknologien tjener menneskets beste interesser.</p>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-section">
+            <p>2024 Digital Fotavtrykk</p>
+            <p>Kontakt oss: tymofiic@afk.no | Telefon: +47 123 45 678</p>
+            <p>Twitter: @DigitalFootprint | Facebook: @DigitalFootprintNO | LinkedIn: Digital Footprint Norway<p>
+            <p>Språk: [Norsk | English | Espanol | Русский]<p>
+        </div>
+        <div class="footer-logo">
+            <img src="Bilder/digital-fotavtrykk-logo.jpeg" alt="Footer Logo">
+        </div>
+        <p>&copy; 2024 www.digitalfotavtrykk.no. Alle rettigheter reservert.</p>
+    </footer>
+
+    <script>
+        const languageButton = document.getElementById('language-button');
+        const languageMenu = document.getElementById('language-menu');
+
+        const updateLanguage = (lang) => {
+            fetch('languages.json')
+                .then(response => response.json())
+                .then(data => {
+                    const elementsToTranslate = document.querySelectorAll('[data-key]');
+                    elementsToTranslate.forEach(el => {
+                        const key = el.getAttribute('data-key');
+                        if (data[lang] && data[lang][key]) {
+                            el.textContent = data[lang][key];
+                        }
+                    });
+                })
+                .catch(error => console.error('Error loading language file:', error));
+        };
+
+        languageButton.addEventListener('click', () => {
+            const isMenuVisible = languageMenu.style.display === 'block';
+            languageMenu.style.display = isMenuVisible ? 'none' : 'block';
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!languageButton.contains(event.target) && !languageMenu.contains(event.target)) {
+                languageMenu.style.display = 'none';
+            }
+        });
+
+        const languageLinks = document.querySelectorAll('.language-menu a');
+        languageLinks.forEach(link => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault();
+                const selectedLang = link.getAttribute('data-lang');
+                updateLanguage(selectedLang);
+                languageMenu.style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html>

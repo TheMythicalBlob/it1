@@ -1,0 +1,267 @@
+/* Reset basic styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body setup */
+body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background-color: #f4f4f9;
+  color: #333;
+  line-height: 1.6;
+  padding: 0;
+  margin: 0;
+}
+
+h1, h2, h3, p {
+  margin: 0 0 20px;
+  font-weight: normal;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Header and Navigation */
+header {
+  background-color: #005b96;
+  padding: 15px 0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  justify-content: space-between;
+}
+
+#navigasjon {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+}
+
+#logo-knapp {
+  display: flex;
+  justify-content: center; /* Center the logo inside the button */
+  align-items: center;
+}
+
+#logo-knapp img {
+  height: 50px;
+  transition: transform 0.3s ease;
+}
+
+#logo-knapp img:hover {
+  transform: scale(1.1);
+}
+
+#språk-knapp {
+  margin-left: auto;
+}
+
+#språk-knapp img {
+  height: 30px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+#språk-knapp img:hover {
+  transform: scale(1.1);
+}
+
+#språk-knapp .dropdown {
+  display: none;
+  position: absolute;
+  top: 40px;
+  right: 0;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+#språk-knapp:hover .dropdown {
+  display: block;
+}
+
+#språk-knapp button {
+  padding: 10px 15px;
+  background: #fff;
+  color: #005b96;
+  border: none;
+  text-align: left;
+  width: 100%;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#språk-knapp button:hover {
+  background-color: #005b96;
+  color: white;
+}
+
+/* Main content styling */
+main {
+  padding: 50px 20px;
+  background-color: #fff;
+}
+
+#innhold {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+
+#venstre-seksjon img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+#høyre-seksjon {
+  max-width: 600px;
+  padding-left: 20px;
+}
+
+#høyre-seksjon h1 {
+  font-size: 2.8rem;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+#høyre-seksjon p {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: #555;
+}
+
+/* Questions section styling */
+#spørsmål {
+  margin-top: 60px;
+}
+
+#spørsmål h2 {
+  font-size: 2.2rem;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.spørsmål {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.spørsmål:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.spørsmål h3 {
+  font-size: 1.8rem;
+  color: #333;
+}
+
+.spørsmål p {
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.read-more {
+  font-size: 1rem;
+  color: #005b96;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.read-more:hover {
+  color: #003d66;
+}
+
+/* Footer styling */
+footer {
+  background-color: #005b96;
+  color: white;
+  padding: 20px 0;
+  text-align: center;
+  font-size: 1rem;
+}
+
+#kontakt h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+#kontakt p {
+  margin: 5px 0;
+  color: #dcdcdc;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  #innhold {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  #venstre-seksjon img {
+    max-width: 80%;
+    margin-bottom: 20px;
+  }
+
+  #høyre-seksjon {
+    max-width: 100%;
+    padding-left: 0;
+  }
+
+  #navigasjon {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  #logo-knapp img {
+    height: 40px;
+  }
+
+  #språk-knapp {
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  #høyre-seksjon h1 {
+    font-size: 2.2rem;
+  }
+
+  #spørsmål h2 {
+    font-size: 1.8rem;
+  }
+
+  .spørsmål h3 {
+    font-size: 1.5rem;
+  }
+
+  .spørsmål p {
+    font-size: 1rem;
+  }
+}
+
+#globe-logo {
+  display: flex;
+  align-items: center;
+}
+
+#globe-logo img {
+  height: 40px;
+  margin-left: 20px;
+}
