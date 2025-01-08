@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JavaScript</title>
+    <style>
+      body {
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Eksempel på dynamisk Nettside med JavaScript</h1>
+    <p>Jeg liker: <span id="txtLiker">koding</span> for det er gøy.</p>
+    <label for="">Hva liker du?</label><br />
+    <!--
+		Blir lagd et input felt får en id og en verdi og tilslutt "Når man skriver i input feltet så:
+		kjøres funksjonen 'hvaLikerJeg()' " -->
+    <input
+      type="text"
+      id="inpLiker"
+      value="koding"
+      oninput="hvaLikerJeg()"
+    /><br />
+  </body>
+  <script>
+    function hvaLikerJeg() {
+      let txtLiker = document.getElementById("txtLiker");
+      let inpLiker = document.getElementById("inpLiker");
+      txtLiker.innerHTML = inpLiker.value;
+    }
+  </script>
+</html>
