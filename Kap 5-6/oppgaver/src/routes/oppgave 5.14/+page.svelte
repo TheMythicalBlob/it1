@@ -1,5 +1,8 @@
 <script>
-   let name = "world"
+   let name = ""
+
 </script>
+<input bind:value={name}/>
+
 
 <h1>Hello {name.toUpperCase()}!</h1>

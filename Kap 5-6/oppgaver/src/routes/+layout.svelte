@@ -5,8 +5,8 @@
 <nav>
     <ul>
         <li><a href="/">Hjem</a></li>
-        <li><a href="/oppgave_5.13">Oppgave_5.13</a></li>
-        <li><a href="/oppgave_5.14">Oppgave_5.14</a></li>
+        <li><a href="/oppgave 5.13">Oppgave_5.13</a></li>
+        <li><a href="/oppgave 5.14">Oppgave_5.14</a></li>
     </ul>
 </nav>
 
