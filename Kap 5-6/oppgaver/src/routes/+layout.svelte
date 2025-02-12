@@ -7,6 +7,9 @@
         <li><a href="/">Hjem</a></li>
         <li><a href="/oppgave 5.13">Oppgave_5.13</a></li>
         <li><a href="/oppgave 5.14">Oppgave_5.14</a></li>
+        <li><a href="/oppgave 5.15">Oppgave_5.15</a></li>
+        <li><a href="/oppgave 5.16">Oppgave_5.16</a></li>
+        <li><a href="/oppgave 5.21">Oppgave_5.21</a></li>
     </ul>
 </nav>
 
