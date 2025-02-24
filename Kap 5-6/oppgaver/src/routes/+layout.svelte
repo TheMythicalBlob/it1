@@ -10,6 +10,7 @@
         <li><a href="/oppgave 5.15">Oppgave_5.15</a></li>
         <li><a href="/oppgave 5.16">Oppgave_5.16</a></li>
         <li><a href="/oppgave 5.21">Oppgave_5.21</a></li>
+        <li><a href="/oppgave 6.01">Oppgave_6.01</a></li>
     </ul>
 </nav>
 
