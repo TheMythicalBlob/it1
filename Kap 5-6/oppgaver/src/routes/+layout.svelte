@@ -12,6 +12,8 @@
         <li><a href="/oppgave 6.01">Oppgave_6.01</a></li>
         <li><a href="/oppgave 6.02">Oppgave_6.02</a></li>
         <li><a href="/oppgave 6.03">Oppgave_6.03</a></li>
+        <li><a href="/oppgave 6.13">Oppgave_6.13</a></li>
+        <li><a href="/6.3.5_land-oppgave_øving">6.3.5_land-oppgave_øving</a></li>
     </ul>
 </nav>
 

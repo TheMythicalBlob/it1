@@ -1,0 +1,23 @@
+[
+	{
+		"landsnavn": "Norge",
+		"hovedstad": "Oslo",
+		"gruppemedlemskap":["Skandinavia", "Norden"]
+	},{
+		"landsnavn": "Sverige",
+		"hovedstad": "Stockholm",
+		"gruppemedlemskap":["Skandinavia", "Norden", "EU"]
+	},{
+		"landsnavn": "Danmark",
+		"hovedstad": "København",
+		"gruppemedlemskap":["Skandinavia", "Norden", "EU"]
+	},{
+		"landsnavn": "Finland",
+		"hovedstad": "Helsingfors",
+		"gruppemedlemskap":["Norden", "EU"]
+	},{
+		"landsnavn": "Island",
+		"hovedstad": "Reykavik",
+		"gruppemedlemskap":["Norden", "EU"]
+	}
+]
