@@ -1,0 +1,106 @@
+[
+  {
+    "bilde": "bukse_0000.jpg",
+    "navn": "Hullete",
+    "plagg": "bukse",
+    "pris": 490,
+    "type": "Olabukse",
+    "beskrivelse": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nam, amet dolores? Natus accusantium laboriosam nihil nesciunt, culpa aut voluptas minima adipisci molestias consectetur eius dolorum animi accusamus obcaecati cupiditate provident."
+  },
+  {
+    "bilde": "bukse_0001.jpg",
+    "navn": "Snasen",
+    "plagg": "bukse",
+    "pris": 580,
+    "type": "Finbukse",
+    "beskrivelse": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nam, amet dolores? Natus accusantium laboriosam nihil nesciunt, culpa aut voluptas minima adipisci molestias consectetur eius dolorum animi accusamus obcaecati cupiditate provident."
+  },
+  {
+    "bilde": "bukse_0002.jpg",
+    "navn": "Strechy",
+    "plagg": "bukse",
+    "pris": 640,
+    "type": "Olebukse",
+    "beskrivelse": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nam, amet dolores? Natus accusantium laboriosam nihil nesciunt, culpa aut voluptas minima adipisci molestias consectetur eius dolorum animi accusamus obcaecati cupiditate provident."
+  },
+  {
+    "bilde": "bukse_0003.jpg",
+    "navn": "Straight",
+    "plagg": "bukse",
+    "pris": 530,
+    "type": "Finbukse",
+    "beskrivelse": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nam, amet dolores? Natus accusantium laboriosam nihil nesciunt, culpa aut voluptas minima adipisci molestias consectetur eius dolorum animi accusamus obcaecati cupiditate provident."
+  },
+  {
+    "bilde": "skjorte_0003.jpg",
+    "navn": "Stripete",
+    "plagg": "skjorte",
+    "pris": 380,
+    "type": "Hverdags",
+    "beskrivelse": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nam, amet dolores? Natus accusantium laboriosam nihil nesciunt, culpa aut voluptas minima adipisci molestias consectetur eius dolorum animi accusamus obcaecati cupiditate provident."
+  },
+  {
+    "bilde": "bukse_0004.jpg",
+    "navn": "Lommerusk",
+    "plagg": "bukse",
+    "pris": 280,
+    "type": "Olabukse",
+    "beskrivelse": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nam, amet dolores? Natus accusantium laboriosam nihil nesciunt, culpa aut voluptas minima adipisci molestias consectetur eius dolorum animi accusamus obcaecati cupiditate provident."
+  },
+  {
+    "bilde": "bukse_0005.jpg",
+    "navn": "Hullete 2",
+    "plagg": "bukse",
+    "pris": 540,
+    "type": "Olabukse",
+    "beskrivelse": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nam, amet dolores? Natus accusantium laboriosam nihil nesciunt, culpa aut voluptas minima adipisci molestias consectetur eius dolorum animi accusamus obcaecati cupiditate provident."
+  },
+  {
+    "bilde": "bukse_0006.jpg",
+    "navn": "Trendy",
+    "plagg": "bukse",
+    "pris": 740,
+    "type": "Finbukse",
+    "beskrivelse": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nam, amet dolores? Natus accusantium laboriosam nihil nesciunt, culpa aut voluptas minima adipisci molestias consectetur eius dolorum animi accusamus obcaecati cupiditate provident."
+  },
+  {
+    "bilde": "skjorte_0002.jpg",
+    "navn": "Vit",
+    "plagg": "skjorte",
+    "pris": 350,
+    "type": "Tennis",
+    "beskrivelse": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nam, amet dolores? Natus accusantium laboriosam nihil nesciunt, culpa aut voluptas minima adipisci molestias consectetur eius dolorum animi accusamus obcaecati cupiditate provident."
+  },
+  {
+    "bilde": "bukse_0007.jpg",
+    "navn": "Fargete",
+    "plagg": "bukse",
+    "pris": 440,
+    "type": "Olabukse",
+    "beskrivelse": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nam, amet dolores? Natus accusantium laboriosam nihil nesciunt, culpa aut voluptas minima adipisci molestias consectetur eius dolorum animi accusamus obcaecati cupiditate provident."
+  },
+  {
+    "bilde": "bukse_0008.jpg",
+    "navn": "Brettet",
+    "plagg": "bukse",
+    "pris": 630,
+    "type": "Finbukse",
+    "beskrivelse": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nam, amet dolores? Natus accusantium laboriosam nihil nesciunt, culpa aut voluptas minima adipisci molestias consectetur eius dolorum animi accusamus obcaecati cupiditate provident."
+  },
+  {
+    "bilde": "bukse_0009.jpg",
+    "navn": "Komfort",
+    "plagg": "bukse",
+    "pris": 840,
+    "type": "Finbukse",
+    "beskrivelse": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nam, amet dolores? Natus accusantium laboriosam nihil nesciunt, culpa aut voluptas minima adipisci molestias consectetur eius dolorum animi accusamus obcaecati cupiditate provident."
+  },
+  {
+    "bilde": "skjorte_0001.jpg",
+    "navn": "Straight",
+    "plagg": "skjorte",
+    "pris": 450,
+    "type": "Finskjorte",
+    "beskrivelse": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nam, amet dolores? Natus accusantium laboriosam nihil nesciunt, culpa aut voluptas minima adipisci molestias consectetur eius dolorum animi accusamus obcaecati cupiditate provident."
+  }
+]
