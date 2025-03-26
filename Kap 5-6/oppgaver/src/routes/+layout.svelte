@@ -4,16 +4,16 @@
 
 <nav>
     <ul>
-        <li><a href="/oppgave 5.13">Oppgave_5.13</a></li>
-        <li><a href="/oppgave 5.14">Oppgave_5.14</a></li>
-        <li><a href="/oppgave 5.15">Oppgave_5.15</a></li>
-        <li><a href="/oppgave 5.16">Oppgave_5.16</a></li>
-        <li><a href="/oppgave 5.21">Oppgave_5.21</a></li>
-        <li><a href="/oppgave 6.01">Oppgave_6.01</a></li>
-        <li><a href="/oppgave 6.02">Oppgave_6.02</a></li>
-        <li><a href="/oppgave 6.03">Oppgave_6.03</a></li>
-        <li><a href="/oppgave 6.13">Oppgave_6.13</a></li>
-        <li><a href="/6.3.5_land-oppgave_øving">6.3.5_land-oppgave_øving</a></li>
+        <li><a href="/kapittel_5/oppgave 5.13">Oppgave_5.13</a></li>
+        <li><a href="/kapittel_5/oppgave 5.14">Oppgave_5.14</a></li>
+        <li><a href="/kapittel_5/oppgave 5.15">Oppgave_5.15</a></li>
+        <li><a href="/kapittel_5/oppgave 5.16">Oppgave_5.16</a></li>
+        <li><a href="/kapittel_5/oppgave 5.21">Oppgave_5.21</a></li>
+        <li><a href="/kapittel_6/oppgave 6.01">Oppgave_6.01</a></li>
+        <li><a href="/kapittel_6/oppgave 6.02">Oppgave_6.02</a></li>
+        <li><a href="/kapittel_6/oppgave 6.03">Oppgave_6.03</a></li>
+        <li><a href="/kapittel_6/oppgave 6.13">Oppgave_6.13</a></li>
+        <li><a href="/kapittel_6/6.3.5_land-oppgave_øving">6.3.5_land-oppgave_øving</a></li>
         <li><a href="/prosjekt/nettbutikk">Prosjekt</a></li>
     </ul>
 </nav>

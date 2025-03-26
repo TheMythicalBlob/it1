@@ -46,9 +46,10 @@
 	
 	handlekurv.splice(indeks, 1)
 	handlekurv = [...handlekurv]
+	
 }
 
-	
+
 	const leggIHandlekurv = (indeks) => {
 		const vare = varer[indeks]
 		if (vare.antall > 0) {
