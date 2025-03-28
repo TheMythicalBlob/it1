@@ -1,69 +1,69 @@
 <script>
-    let { children } = $props();
+	/* Brukes til å finne ut hvilken undermappe vi er i*/
+	import { page } from '$app/state';
+	let { children } = $props();
 </script>
 
-<nav>
-    <ul>
-        <li><a href="/kapittel_5/oppgave_5.13">Oppgave_5.13</a></li>
-        <li><a href="/kapittel_5/oppgave_5.14">Oppgave_5.14</a></li>
-        <li><a href="/kapittel_5/oppgave_5.15">Oppgave_5.15</a></li>
-        <li><a href="/kapittel_5/oppgave_5.16">Oppgave_5.16</a></li>
-        <li><a href="/kapittel_5/oppgave_5.21">Oppgave_5.21</a></li>
-        <li><a href="/kapittel_6/oppgave_6.01">Oppgave_6.01</a></li>
-        <li><a href="/kapittel_6/oppgave_6.02">Oppgave_6.02</a></li>
-        <li><a href="/kapittel_6/oppgave_6.03">Oppgave_6.03</a></li>
-        <li><a href="/kapittel_6/oppgave_6.13">Oppgave_6.13</a></li>
-        <li><a href="/kapittel_6/6.3.5_land-oppgave_øving">6.3.5_land-oppgave_øving</a></li>
-        <li><a href="/prosjekt/nettbutikk">Prosjekt</a></li>
-		<li><a href="/kapittel_6/oppgave_6.22_kortstokk">Oppgave_6.22a_kortstokk</a></li>
-    </ul>
-</nav>
-
+<!-- Navbar og style til dels hentet fra Sveltes eksempel-app -->
+<header>
+	<nav>
+		<ul>
+			<li aria-current={page.url.pathname === '/' ? 'page' : undefined}>
+				<a href="/">Hovedsiden</a>
+			</li>
+			<li aria-current={page.url.pathname === '/kapittel_5' ? 'page' : undefined}>
+				<a href="/kapittel_5">Kapittel 5</a>
+			</li>
+			<li aria-current={page.url.pathname === '/kapittel_6' ? 'page' : undefined}>
+				<a href="/kapittel_6">Kapittel 6</a>
+			</li>
+			<li aria-current={page.url.pathname === '/prosjekt' ? 'page' : undefined}>
+				<a href="/prosjekt">Prosjekter</a>
+			</li>
+		</ul>
+	</nav>
+</header>
 <main>
-    {@render children()}
+	{@render children()}
 </main>
-
 <style>
-    * {
-        font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
-            sans-serif;
-    }
+	ul {
+		position: relative;
+		padding: 0;
+		margin: 0;
+		height: 3em;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		list-style: none;
+	}
+	nav a {
+		display: flex;
+		height: 100%;
+		align-items: center;
+		padding: 0.5rem;
+		font-weight: 700;
+		letter-spacing: 0.1em;
+		text-decoration: none;
+		transition: color 0.2s linear;
+	}
 
-    nav ul {
-        list-style-type: none;
-        display: flex;
-        flex-wrap: wrap;
-        margin: 0;
-        padding: 0;
-        height: 3rem;
-    }
+	nav a:hover {
+		background-color: antiquewhite;
+	}
 
-    nav ul li {
-        flex-grow: 1;
-        height: 100%;
-        flex-basis: auto;
-    }
+	li[aria-current='page']{
+		background-color: antiquewhite;
+	}
 
-    nav ul li a {
-        display: block;
-        width: 100%;
-        height: 100%;
-        border: white 1px solid;
-        padding: 0 0;
-        text-decoration: none;
-        color: white;
-        background-color: black;
-        /* Bruker flex, justify-content og align-item til å sentrere tekst på navknapper*/
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+	main {
+		width: fit-content;
+		max-width: var(--column-width);
+		margin: 0 auto;
+		padding: 1rem;
+		background-color: floralwhite;
+		box-shadow: 0.5rem 0.5rem 0.5rem darkgrey;
+		border-radius: 0.5rem;
+	}
 
-    nav ul li a:hover {
-        background-color: darkgrey;
-    }
-
-    nav ul li a:active {
-        background-color: darkgreen;
-    }
 </style>
