@@ -1,4 +1,15 @@
 <script>
+	const kapittel_5 = [
+		[	
+			{ nr: "5.1.13", navn: "Rød, Grønn og Blå farger"},
+			{ nr: "5.1.14", navn: "Store bokstaver"},
+			{ nr: "5.1.15", navn: "Kalkulator"},
+			{ nr: "5.1.16", navn: "(tomt)"},
+		],[
+			{ nr: "5.2.21", navn: "ingenting"},
+		]
+	]
+
 	const kapittel_6 = [
 		[
 			{ nr: "6.0.1", navn: "For-løkke Summer" },
@@ -9,6 +20,7 @@
 			{ nr: "6.1.13",  navn: "Gangertabell"},
 		],[
 			{ nr: "6.2.2", navn: "Objekter i lister" },
+			{ nr: "6.2.3", navn: "Film lister" },
 			{ nr: "6.2.22", navn: "Kortstokk" },
 		],[
 			{ nr: "6.3.5", navn: "Land-oppgave øving" },
@@ -80,6 +92,26 @@
 			</div>
 		{/each}
 	</div>
+
+	<h1>Oppgaver fra kap 5</h1>
+
+	<div class="kapittel_5">
+		{#each kapittel_5 as undereksempler, under_indeks}
+			<div>
+				{#each undereksempler as eks, eks_indeks}
+					{#if eks_indeks == 0}
+						<h3>Oppgaver fra 5.{under_indeks}</h3>
+					{/if}
+					<a
+						href="/kapittel_5/kapittel_{eks.nr.slice(
+							0,
+							3,
+						)}/oppgave_{eks.nr}">{eks.nr} {eks.navn}</a
+					>
+				{/each}
+			</div>
+		{/each}
+	</div>
 </main>
 
 <style>
@@ -126,6 +158,29 @@
 		padding: 0.5em;
 	}
 	.kapittel_6 > div a:hover,
+	.oppgaver a:hover {
+		background-color: antiquewhite;
+	}
+
+	.kapittel_5 {
+		display: flex;
+		gap: 10px;
+	}
+	.kapittel_5 > div,
+	.oppgaver {
+		flex: 0 1 250px;
+		display: flex;
+		flex-direction: column;
+	}
+	.kapittel_5 > div > h3 {
+		text-align: center;
+	}
+	.kapittel_5 > div a,
+	.oppgaver a {
+		text-decoration: none;
+		padding: 0.5em;
+	}
+	.kapittel_5 > div a:hover,
 	.oppgaver a:hover {
 		background-color: antiquewhite;
 	}
