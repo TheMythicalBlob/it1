@@ -11,6 +11,9 @@
 			<li aria-current={page.url.pathname === '/' ? 'page' : undefined}>
 				<a href="/">Hovedsiden</a>
 			</li>
+			<li aria-current={page.url.pathname === '/kapittel_5' ? 'page' : undefined}>
+				<a href="/kapittel_5">Kapittel 5</a>
+			</li>
 			<li aria-current={page.url.pathname === '/kapittel_6' ? 'page' : undefined}>
 				<a href="/kapittel_6">Kapittel 6</a>
 			</li>
