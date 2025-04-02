@@ -15,7 +15,9 @@
 			{ nr: "6.3.5", navn: "Land-oppgave øving" },
 		],[
 			{ nr: "6.4.5", navn: "Emojisøk" },
-		],
+		],[
+			{ nr: "6.5.26", navn: "Cow clicker" },
+		]
 	];
 </script>
 
