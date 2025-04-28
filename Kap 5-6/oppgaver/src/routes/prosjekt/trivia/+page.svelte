@@ -1,65 +1,58 @@
-<script>
-    const kategorier = [
-      { navn: "Matematikk", id: 19 },
-      { navn: "Historie", id: 23 },
-      { navn: "Datamaskin", id: 18 },
-      { navn: "Geografi", id: 22 },
-      { navn: "Filmer", id: 11 },
-      { navn: "Videospill", id: 15 },
-      { navn: "Dyr", id: 27},
-      { navn: "Generell kunnskap", id: 9 }
-    ];
-  </script>
-  
   <main>
-    <h1>Velg kategori</h1>
-    <a href="/prosjekt/trivia/poeng_oversikt" class="stats-button">Se poengoversikt</a>
-    <div class="grid">
-      {#each kategorier as kat}
-        <a href={`/prosjekt/trivia/kategori/${kat.id}`}>
-          <button>{kat.navn}</button>
-        </a>
-      {/each}
+    <h1>Velkommen til Trivia quiz nettside ting</h1>
+    <p>Hva vil du gjøre</p>
+  
+    <div class="valg">
+      <a href="/prosjekt/trivia/valg_side">
+        <button>Start quiz</button>
+      </a>
+      <a href="/prosjekt/trivia/poeng_oversikt">
+        <button>Se poengoversikt</button>
+      </a>
     </div>
   </main>
   
   <style>
     main {
-      padding: 2rem;
       text-align: center;
+      padding: 3rem;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 1rem;
-      margin-top: 2rem;
+  
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
     }
+  
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+    }
+  
+    .valg {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+  
+    a {
+      text-decoration: none;
+    }
+  
     button {
-      padding: 1rem;
-      font-size: 1rem;
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
       border: none;
-      border-radius: 10px;
-      background-color: #6200ea;
+      border-radius: 8px;
+      background-color: #0070f3;
       color: white;
       cursor: pointer;
-      transition: 0.2s ease;
-    }
-    button:hover {
-      background-color: #3700b3;
-    }
-    .stats-button {
-      display: inline-block;
-      margin-top: 1rem;
-      padding: 0.75rem 1rem;
-      background-color: #008c3e;
-      color: white;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: bold;
       transition: background-color 0.2s;
     }
-    .stats-button:hover {
-      background-color: #006f32;
+  
+    button:hover {
+      background-color: #0059c1;
     }
   </style>
   

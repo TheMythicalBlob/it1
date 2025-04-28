@@ -1,136 +1,117 @@
 <script>
-  import { page } from '$app/stores';
-  import { onMount } from 'svelte';
-  import { get } from 'svelte/store';
+  import { page } from '$app/stores'
+  import { onMount } from 'svelte'
+  import { get } from 'svelte/store'
 
-  const params = get(page).url.searchParams;
-  const amount = params.get("amount") || "10";
-  const category = params.get("category") || "19";
-  const difficulty = params.get("difficulty") || "easy";
-  const type = params.get("type") || "multiple";
-  const scoreKey = `highscore-${category}-${difficulty}-${type}`;
-  
-  let valgtKategori = "";
-  let questions = [];
-  let index = 0;
-  let score = 0;
-  let highscore = 0;
-  let selected = '';
-  let feedback = false;
-  let showResult = false;
-  let loading = true;
-  let error = false;
+  const parametere = get(page).url.searchParams
+  const antall = parametere.get("amount")
+  const kategoriId = parametere.get("category")
+  const vanskelighetsgrad = parametere.get("difficulty")
+  const typeSvar = parametere.get("type")
+  const scoreNokkel = `highscore-${kategoriId}-${vanskelighetsgrad}-${typeSvar}`
 
+  let valgtKategori = ""
+  let sporsmal = []
+  let indeks = 0
+  let poeng = 0
+  let hoyestePoeng = 0
+  let valgtSvar = ''
+  let visTilbakemelding = false
+  let visResultat = false
+  let laster = true
 
-  const decode = (str) => {
-    const el = document.createElement("textarea");
-    el.innerHTML = str;
-    return el.value;
-  };
+  const dekod = (tekst) => {
+    const el = document.createElement("textarea")
+    el.innerHTML = tekst
+    return el.value
+  }
 
-  const shuffle = (arr) => [...arr].sort(() => Math.random() - 0.5);
+  const stokk = (arr) => [...arr].sort(() => Math.random() - 0.5)
 
   onMount(async () => {
-  try {
-    const url = `https://opentdb.com/api.php?amount=${amount}&category=${category}&difficulty=${difficulty}&type=${type}`;
-    const res = await fetch(url);
-    const data = await res.json();
-
-    // Hent kategori-navn fra API
     try {
-      const katRes = await fetch("https://opentdb.com/api_category.php");
-      const katData = await katRes.json();
-      const kategori = katData.trivia_categories.find(k => k.id.toString() === category);
-      valgtKategori = kategori ? kategori.name : `Kategori ${category}`;
-    } catch (e) {
-      valgtKategori = `Kategori ${category}`;
+      const url = `https://opentdb.com/api.php?amount=${antall}&category=${kategoriId}&difficulty=${vanskelighetsgrad}&type=${typeSvar}`
+      const res = await fetch(url)
+      const data = await res.json()
+
+      const katRes = await fetch("https://opentdb.com/api_category.php")
+      const katData = await katRes.json()
+      const kategori = katData.trivia_categories.find(k => k.id.toString() === kategoriId)
+      valgtKategori = kategori?.name || `Kategori ${kategoriId}`
+
+      sporsmal = data.results.map(q => ({
+        sporsmaltekst: dekod(q.question),
+        riktig: dekod(q.correct_answer),
+        svaralternativer: stokk([dekod(q.correct_answer), ...q.incorrect_answers.map(dekod)])
+      }))
+
+      const lagret = localStorage.getItem(scoreNokkel)
+      hoyestePoeng = lagret ? parseInt(lagret) : 0
+    } finally {
+      laster = false
     }
+  })
 
-    questions = data.results.map(q => ({
-      question: decode(q.question),
-      correct: decode(q.correct_answer),
-      answers: shuffle([decode(q.correct_answer), ...q.incorrect_answers.map(decode)])
-    }));
-
-    const savedHighscore = localStorage.getItem(scoreKey);
-    highscore = savedHighscore ? parseInt(savedHighscore) : 0;
-
-  } catch {
-    error = true;
-  } finally {
-    loading = false;
-  }
-});
-
-
-  function answer(ans) {
-    if (feedback) return;
-    selected = ans;
-    feedback = true;
-    if (ans === questions[index].correct) score++;
+  const svar = (valg) => {
+    if (visTilbakemelding) return
+    valgtSvar = valg
+    visTilbakemelding = true
+    if (valg === sporsmal[indeks].riktig) poeng++
 
     setTimeout(() => {
-      selected = '';
-      feedback = false;
-      index++;
-      if (index >= questions.length) {
-        showResult = true;
-
-        // Oppdater highscore hvis du har slått den
-        if (score > highscore) {
-          highscore = score;
-          localStorage.setItem(scoreKey, score);
+      valgtSvar = ''
+      visTilbakemelding = false
+      indeks++
+      if (indeks >= sporsmal.length) {
+        visResultat = true
+        if (poeng > hoyestePoeng) {
+          hoyestePoeng = poeng
+          localStorage.setItem(scoreNokkel, poeng)
         }
-
-        localStorage.setItem("lastScore", score);
+        localStorage.setItem("lastScore", poeng)
       }
-
-    }, 1200);
+    }, 1200)
   }
 </script>
 
-{#if loading}
+{#if laster}
   <main><p>Laster spørsmål...</p></main>
-{:else if error}
-  <main><p>⚠️ Klarte ikke å hente spørsmål. Prøv igjen.</p></main>
-{:else if showResult}
+{:else if visResultat}
   <main>
     <h2>Resultat</h2>
-    <p>Kategori: <strong>{valgtKategori}</strong></p>
-    <p>Du fikk <strong>{score}</strong> av {questions.length} riktige</p>
-    <p>Sist lagrede score: {localStorage.getItem("lastScore")}</p>
-    <p>Høyeste score (for denne quizen): <strong>{highscore}</strong></p>    
+    <b>Kategori: {valgtKategori}</b>
+    <b>Du fikk {poeng} av {sporsmal.length} riktige</b> <br> <br> <br>
+    <b>Høyeste score (for denne quizen): {hoyestePoeng}</b>    
     <div class="result-buttons">
       <a href="/prosjekt/trivia">Tilbake til hovedmeny</a>
       <a href="/prosjekt/trivia/poeng_oversikt">Se poengoversikt</a>
     </div>
-    
   </main>
-{:else if questions.length > 0}
+{:else if sporsmal.length > 0}
   <main>
     <h2>{valgtKategori}</h2>
-    <p>Spørsmål {index + 1} av {questions.length}</p>
-    <p>{@html questions[index].question}</p>
+    <p>Spørsmål {indeks + 1} av {sporsmal.length}</p>
+    <p>{@html sporsmal[indeks].sporsmaltekst}</p>
 
     <div class="answers">
-      {#each questions[index].answers as ans}
+      {#each sporsmal[indeks].svaralternativer as alternativ}
         <button
-          class:selected={selected === ans}
-          class:correct={feedback && ans === questions[index].correct}
-          class:wrong={feedback && selected === ans && ans !== questions[index].correct}
-          on:click={() => answer(ans)}
-          disabled={feedback}
+          class:selected={valgtSvar === alternativ}
+          class:correct={visTilbakemelding && alternativ === sporsmal[indeks].riktig}
+          class:wrong={visTilbakemelding && valgtSvar === alternativ && alternativ !== sporsmal[indeks].riktig}
+          on:click={() => svar(alternativ)}
+          disabled={visTilbakemelding}
         >
-          {ans}
+          {alternativ}
         </button>
       {/each}
     </div>
 
-    {#if feedback}
+    {#if visTilbakemelding}
       <p class="feedback">
-        {selected === questions[index].correct
+        {valgtSvar === sporsmal[indeks].riktig
           ? "✅ Riktig!"
-          : `❌ Feil! Riktig svar var: ${questions[index].correct}`}
+          : `❌ Feil! Riktig svar var: ${sporsmal[indeks].riktig}`}
       </p>
     {/if}
   </main>
@@ -142,6 +123,7 @@
     margin: auto;
     padding: 2rem;
     text-align: center;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   }
 
   .answers {

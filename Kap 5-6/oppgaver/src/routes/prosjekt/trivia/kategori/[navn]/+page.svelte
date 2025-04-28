@@ -1,44 +1,43 @@
 <script>
-  import { page } from '$app/stores';
-  import { onMount } from 'svelte';
-  
-  // Hent valgt kategori-id fra URL (f.eks. 19 for Matematikk)
-  let categoryId = $page.params.navn;
-  let amount = 10;
-  let difficulty = "easy";
-  let type = "multiple";
-  let kategoriTekst = "";
+  import { page } from '$app/stores'
+  import { onMount } from 'svelte'
 
-onMount(async () => {
-  try {
-    const res = await fetch("https://opentdb.com/api_category.php");
-    const data = await res.json();
-    const kategori = data.trivia_categories.find(k => k.id.toString() === categoryId);
-    kategoriTekst = kategori ? kategori.name : `Kategori ${categoryId}`;
-  } catch {
-    kategoriTekst = `Kategori ${categoryId}`;
-  }
-});
+  let kategoriId = $page.params.navn
+  let antall = 10
+  let vanskelighetsgrad = "easy"
+  let typeSvar = "multiple"
+  let kategoriNavn = ""
 
+  onMount(async () => {
+    try {
+      const res = await fetch("https://opentdb.com/api_category.php")
+      const data = await res.json()
+      const kategori = data.trivia_categories.find(k => k.id.toString() === kategoriId)
+      kategoriNavn = kategori ? kategori.name : `Kategori ${kategoriId}`
+    } catch {
+      kategoriNavn = `Kategori ${kategoriId}`
+    }
+  })
 
-  function startQuiz() {
-    const url = `/prosjekt/trivia/trivia_kategorier?amount=${amount}&category=${categoryId}&difficulty=${difficulty}&type=${type}`;
-    window.location.href = url;
+  const startQuiz = () => {
+    const url = `/prosjekt/trivia/trivia_kategorier?amount=${antall}&category=${kategoriId}&difficulty=${vanskelighetsgrad}&type=${typeSvar}`
+    window.location.href = url
   }
 </script>
 
+
 <main>
-  <h1>{kategoriTekst}</h1>
-  <p>Velg dine quiz innstillinger:</p>
+  <h1>{kategoriNavn}</h1>
+  <p>Velg dine quiz-innstillinger:</p>
 
   <label>
     Antall spørsmål:
-    <input type="number" min="1" max="50" bind:value={amount}>
+    <input type="number" min="1" max="50" bind:value={antall} />
   </label>
 
   <label>
     Vanskelighetsgrad:
-    <select bind:value={difficulty}>
+    <select bind:value={vanskelighetsgrad}>
       <option value="easy">Lett</option>
       <option value="medium">Middels</option>
       <option value="hard">Vanskelig</option>
@@ -47,7 +46,7 @@ onMount(async () => {
 
   <label>
     Type spørsmål:
-    <select bind:value={type}>
+    <select bind:value={typeSvar}>
       <option value="multiple">Flervalg</option>
       <option value="boolean">Sant / Usant</option>
     </select>
@@ -64,9 +63,10 @@ onMount(async () => {
     display: flex;
     flex-direction: column;
     gap: 1.2rem;
-    background-color: #fefefe;
+    background-color: white;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
 
   h1 {

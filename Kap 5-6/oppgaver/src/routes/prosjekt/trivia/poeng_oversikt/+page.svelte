@@ -1,16 +1,16 @@
 <script>
-  import { onMount } from 'svelte';
+  import { onMount } from 'svelte'
 
-  let highscores = [];
-  let kategorier = {}; // maps category id -> name
+  let highscores = []
+  let kategorier = {} 
 
   onMount(async () => {
     try {
       // Hent kategorier
-      const res = await fetch("https://opentdb.com/api_category.php");
-      const data = await res.json();
+      const res = await fetch("https://opentdb.com/api_category.php")
+      const data = await res.json()
       for (const kat of data.trivia_categories) {
-        kategorier[kat.id.toString()] = kat.name; // sikre key er string
+        kategorier[kat.id.toString()] = kat.name
       }
 
       // Hent highscores fra localStorage
@@ -25,24 +25,24 @@
           const score = parseInt(localStorage.getItem(key));
 
           tempScores.push({
-            kategori: kategorier[category] || `Kategori ${category}`,
+            kategori: kategorier[category],
             category,
             difficulty,
             type,
             score
-          });
+          })
         }
       }
 
       highscores = tempScores;
     } catch (e) {
-      console.error("Klarte ikke å hente poengoversikt:", e);
+      console.error("Klarte ikke å hente poengoversikt:", e)
     }
   });
 </script>
 
 <main>
-  <h1>Poengoversikt</h1>
+  <h1>Highscore oversikt</h1>
 
   {#if highscores.length > 0}
     <table>
@@ -69,7 +69,7 @@
     <p>Ingen lagrede highscores ennå.</p>
   {/if}
 
-  <a href="/prosjekt/trivia">← Tilbake til meny</a>
+  <a href="/prosjekt/trivia"><button>Tilbake til hovedmeny</button></a>
 </main>
 
 <style>
@@ -111,5 +111,19 @@
 
   a:hover {
     text-decoration: underline;
+  }
+  button {
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 8px;
+    background-color: #0070f3;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  button:hover {
+    background-color: #0059c1;
   }
 </style>
