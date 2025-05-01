@@ -7,6 +7,18 @@
   let vanskelighetsgrad = "easy"
   let typeSvar = "multiple"
   let kategoriNavn = ""
+  let feilmelding = ""
+
+  // Hardkodet maks grenser (du kan endre selv hvis du vil senere)
+  const maksPerKategori = {
+    "24": { multiple: 4, boolean: 10 },  // Politikk
+    "30": { multiple: 10, boolean: 10 }, // Gadgets
+    "20": { multiple: 15, boolean: 15 }, // Mythologi
+    "29": { multiple: 15, boolean: 15 }, // Tegneserier
+    "28": { multiple: 15, boolean: 15 }, // Kjøretøy
+    "13": { multiple: 15, boolean: 15 }, // Musikaler
+    "26": { multiple: 15, boolean: 15 }, // Kjendiser
+  }
 
   onMount(async () => {
     try {
@@ -23,8 +35,19 @@
     const url = `/prosjekt/trivia/trivia_kategorier?amount=${antall}&category=${kategoriId}&difficulty=${vanskelighetsgrad}&type=${typeSvar}`
     window.location.href = url
   }
-</script>
 
+  // Riktig maksgrenser basert på kategori og typeSvar
+  $: {
+    const grenser = maksPerKategori[kategoriId]
+    const maks = grenser ? grenser[typeSvar] : 50
+    if (antall > maks) {
+      feilmelding = `⚠️ Maks ${maks} spørsmål for denne kategorien og typen. Antall er satt til ${maks}.`
+      antall = maks
+    } else {
+      feilmelding = ""
+    }
+  }
+</script>
 
 <main>
   <h1>{kategoriNavn}</h1>
@@ -32,7 +55,7 @@
 
   <label>
     Antall spørsmål:
-    <input type="number" min="1" max="50" bind:value={antall} />
+    <input type="number" min="1" max={typeSvar === "multiple" ? (maksPerKategori[kategoriId]?.multiple || 50) : (maksPerKategori[kategoriId]?.boolean || 50)} bind:value={antall} />
   </label>
 
   <label>
@@ -51,6 +74,10 @@
       <option value="boolean">Sant / Usant</option>
     </select>
   </label>
+
+  {#if feilmelding}
+    <p class="feilmelding">{feilmelding}</p>
+  {/if}
 
   <button on:click={startQuiz}>Start quiz</button>
 </main>
@@ -98,5 +125,14 @@
 
   button:hover {
     background-color: #0059c1;
+  }
+
+  .feilmelding {
+    color: #c9184a;
+    font-weight: bold;
+    background-color: #ffe5e9;
+    padding: 0.75rem;
+    border-radius: 8px;
+    margin-top: -0.5rem;
   }
 </style>

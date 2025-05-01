@@ -4,10 +4,10 @@
     <p>Hva vil du gjøre?</p>
 
     <div class="valg">
-      <a href="/prosjekt/trivia/valg_side">
+      <a href="/valg_side">
         <button class="quiz-knapp">Quizer</button>
       </a>
-      <a href="/prosjekt/trivia/poeng_oversikt">
+      <a href="/poeng_oversikt">
         <button class="score-knapp">Se poengoversikt</button>
       </a>
     </div>

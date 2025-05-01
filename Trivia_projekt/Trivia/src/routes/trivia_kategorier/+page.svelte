@@ -100,8 +100,8 @@
     <b>Du fikk {poeng} av {spørsmål.length} riktige</b> <br> <br> <br>
     <b>Høyeste score (for denne quizen): {hoyestePoeng}</b>    
     <div class="result-buttons">
-      <a href="/prosjekt/trivia">Tilbake til hovedmeny</a>
-      <a href="/prosjekt/trivia/poeng_oversikt">Se poengoversikt</a>
+      <a href="/">Tilbake til hovedmeny</a>
+      <a href="/poeng_oversikt">Se poengoversikt</a>
     </div>
   </main>
 {:else if spørsmål.length > 0}
@@ -109,7 +109,7 @@
     <h2>{valgtKategori}</h2>
     <p>Spørsmål {indeks + 1} av {spørsmål.length}</p>
     <p>{@html spørsmål[indeks].spørsmåltekst}</p>
-
+  
     <div class="answers">
       {#each spørsmål[indeks].svaralternativer as alternativ}
         <button

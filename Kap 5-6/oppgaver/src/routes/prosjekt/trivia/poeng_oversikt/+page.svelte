@@ -2,7 +2,7 @@
   import { onMount } from 'svelte'
 
   let highscores = []
-  let kategorier = {} 
+  let kategorier = [] 
 
   onMount(async () => {
     try {
@@ -34,9 +34,10 @@
         }
       }
 
+      tempScores.sort((a, b) => b.score - a.score);
       highscores = tempScores;
-    } catch (e) {
-      console.error("Klarte ikke å hente poengoversikt:", e)
+    } catch (error) {
+      console.error("Klarte ikke å hente poengoversikt:", error)
     }
   });
 </script>
