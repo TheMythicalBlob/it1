@@ -8,7 +8,7 @@
         <button class="quiz-knapp">Quizer</button>
       </a>
       <a href="/poeng_oversikt">
-        <button class="score-knapp">Se poengoversikt</button>
+        <button class="score-knapp">Se highscores</button>
       </a>
     </div>
   </div>
@@ -31,7 +31,7 @@
   }
 
   .container {
-    background-color: rgba(0, 0, 0, 0.4); /* mørk gjennomsiktig boks */
+    background-color: rgba(0, 0, 0, 0.4);
     padding: 3rem 2rem;
     border-radius: 20px;
     box-shadow: 0 0 20px rgba(0,0,0,0.4);
@@ -86,15 +86,11 @@
   }
 
   .score-knapp {
-    background-color: #22c55e;
+    background-color: #00ff08d8;
   }
 
   .score-knapp:hover {
-    background-color: #16a34a;
+    background-color: #388e3c;
     transform: translateY(-2px);
-  }
-  
-  :global(nav) {
-    display: none;
   }
 </style>

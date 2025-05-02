@@ -1,109 +1,127 @@
 <script>
-  import { page } from '$app/stores'
-  import { onMount } from 'svelte'
-  import { get } from 'svelte/store'
+  import { page } from '$app/stores';
+  import { onMount } from 'svelte';
+  import { get } from 'svelte/store';
 
-  const parametere = get(page).url.searchParams
-  const antall = parametere.get("amount")
-  const kategoriId = parametere.get("category")
-  const vanskelighetsgrad = parametere.get("difficulty")
-  const typeSvar = parametere.get("type")
-  const scoreNokkel = `highscore-${kategoriId}-${vanskelighetsgrad}-${typeSvar}`
+  const parametere = get(page).url.searchParams;
+  const antall = parametere.get("amount");
+  const kategoriId = parametere.get("category");
+  const vanskelighetsgrad = parametere.get("difficulty");
+  const typeSvar = parametere.get("type");
+  const scoreNokkel = `highscore-${kategoriId}-${vanskelighetsgrad}-${typeSvar}`;
+  const maxNokkel = `maxscore-${kategoriId}-${vanskelighetsgrad}-${typeSvar}`;
 
-  let valgtKategori = ""
-  let spørsmål = []
-  let indeks = 0
-  let poeng = 0
-  let hoyestePoeng = 0
-  let valgtSvar = ''
-  let visTilbakemelding = false
-  let visResultat = false
-  let laster = true
+  let valgtKategori = "";
+  let spørsmål = [];
+  let indeks = 0;
+  let poeng = 0;
+  let hoyestePoeng = 0;
+  let valgtSvar = '';
+  let visTilbakemelding = false;
+  let visResultat = false;
+  let laster = true;
+  let error = null;
 
   const dekod = (tekst) => {
-    const el = document.createElement("textarea")
-    el.innerHTML = tekst
-    return el.value
-  }
+    const el = document.createElement("textarea");
+    el.innerHTML = tekst;
+    return el.value;
+  };
 
-  const stokk = (arr) => [...arr].sort(() => Math.random() - 0.5)
+  const stokk = (arr) => [...arr].sort(() => Math.random() - 0.5);
 
   onMount(async () => {
-  try {
-    const url = `https://opentdb.com/api.php?amount=${antall}&category=${kategoriId}&difficulty=${vanskelighetsgrad}&type=${typeSvar}`
-    const res = await fetch(url)
-    const data = await res.json()
+    try {
+      const url = `https://opentdb.com/api.php?amount=${antall}&category=${kategoriId}&difficulty=${vanskelighetsgrad}&type=${typeSvar}`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error("API-feil");
 
-    if (!data.results || data.results.length === 0) {
-      error = true
-      return
+      const data = await res.json();
+      if (!data.results || data.results.length === 0) throw new Error("Ingen spørsmål funnet");
+
+      const katRes = await fetch("https://opentdb.com/api_category.php");
+      const katData = await katRes.json();
+      const kategori = katData.trivia_categories.find(k => k.id.toString() === kategoriId);
+      valgtKategori = kategori?.name || `Kategori ${kategoriId}`;
+
+      spørsmål = data.results.map(q => {
+        const riktig = dekod(q.correct_answer);
+        const gale = q.incorrect_answers.map(dekod);
+        const svaralternativer = q.type === "boolean"
+          ? stokk(["True", "False"])
+          : stokk([riktig, ...gale]);
+
+        return {
+          spørsmåltekst: dekod(q.question),
+          riktig,
+          svaralternativer
+        };
+      });
+
+      const lagret = localStorage.getItem(scoreNokkel);
+      hoyestePoeng = lagret ? parseInt(lagret) : 0;
+    } catch (e) {
+      console.error("Feil:", e);
+      error = e.message || "Ukjent feil";
+    } finally {
+      laster = false;
     }
-
-    const katRes = await fetch("https://opentdb.com/api_category.php")
-    const katData = await katRes.json()
-    const kategori = katData.trivia_categories.find(k => k.id.toString() === kategoriId)
-    valgtKategori = kategori?.name
-
-    spørsmål = data.results.map(q => {
-      const riktig = dekod(q.correct_answer)
-      const gale = q.incorrect_answers.map(dekod)
-      const svaralternativer = q.type === "boolean"
-        ? stokk(["True", "False"])
-        : stokk([riktig, ...gale])
-
-      return {
-        spørsmåltekst: dekod(q.question),
-        riktig,
-        svaralternativer
-      }
-    })
-
-    const lagret = localStorage.getItem(scoreNokkel)
-    hoyestePoeng = lagret ? parseInt(lagret) : 0
-
-  } catch (e) {
-    console.error("Feil under lasting av quiz:", e)
-    error = true
-  } finally {
-    laster = false
-  }
-})
+  });
 
   const svar = (valg) => {
-    if (visTilbakemelding) return
-    valgtSvar = valg
-    visTilbakemelding = true
-    if (valg === spørsmål[indeks].riktig) poeng++
+    if (visTilbakemelding) return;
+    valgtSvar = valg;
+    visTilbakemelding = true;
+    if (valg === spørsmål[indeks].riktig) poeng++;
 
     setTimeout(() => {
-      valgtSvar = ''
-      visTilbakemelding = false
-      indeks++
+      valgtSvar = '';
+      visTilbakemelding = false;
+      indeks++;
       if (indeks >= spørsmål.length) {
-        visResultat = true
-        if (poeng > hoyestePoeng) {
-          hoyestePoeng = poeng
-          localStorage.setItem(scoreNokkel, poeng)
+        visResultat = true;
+
+        const prosent = (poeng / spørsmål.length) * 100;
+        const lagretPoeng = parseInt(localStorage.getItem(scoreNokkel) || "0");
+        const lagretMaks = parseInt(localStorage.getItem(maxNokkel) || "0");
+        const lagretProsent = lagretMaks > 0 ? (lagretPoeng / lagretMaks) * 100 : -1;
+
+        if (lagretProsent === -1 || prosent > lagretProsent) {
+          hoyestePoeng = poeng;
+          localStorage.setItem(scoreNokkel, poeng);
+          localStorage.setItem(maxNokkel, spørsmål.length);
         }
-        localStorage.setItem("lastScore", poeng)
+
+        localStorage.setItem("lastScore", poeng);
       }
-    }, 1200)
-  }
+    }, 1200);
+  };
 </script>
+
 
 {#if laster}
   <main><p>Laster spørsmål...</p></main>
+
+{:else if error}
+  <main>
+    <p class="feilmelding">{error}</p>
+    <a href={`/kategori/${kategoriId}`}>
+      <button>Gå tilbake og velg færre spørsmål</button>
+    </a>
+  </main>
+
 {:else if visResultat}
   <main>
     <h2>Resultat</h2>
     <b>Kategori: {valgtKategori}</b>
-    <b>Du fikk {poeng} av {spørsmål.length} riktige</b> <br> <br> <br>
+    <b>Du fikk {poeng} av {spørsmål.length} riktige</b><br><br><br>
     <b>Høyeste score (for denne quizen): {hoyestePoeng}</b>    
     <div class="result-buttons">
       <a href="/">Tilbake til hovedmeny</a>
       <a href="/poeng_oversikt">Se poengoversikt</a>
     </div>
   </main>
+
 {:else if spørsmål.length > 0}
   <main>
     <h2>{valgtKategori}</h2>
@@ -134,6 +152,7 @@
   </main>
 {/if}
 
+
 <style>
   main {
     max-width: 600px;
@@ -148,6 +167,14 @@
     flex-direction: column;
     gap: 0.75rem;
     margin: 1.5rem 0;
+  }
+
+  .feilmelding {
+  color: #f87171;
+  background-color: #2b2b2b;
+  padding: 0.8rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
   }
 
   button {

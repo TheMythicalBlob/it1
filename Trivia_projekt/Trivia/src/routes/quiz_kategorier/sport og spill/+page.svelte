@@ -7,6 +7,7 @@
 </script>
 
 <main>
+  <a href="/valg_side" class="pil-tilbake">⬅</a>
   <div class="container">
     <h1>Sport og spill</h1>
     <p>Velg en quiz:</p>
@@ -100,6 +101,28 @@
     margin-top: 3rem;
     flex-wrap: wrap;
     justify-content: center;
+  }
+
+  .pil-tilbake {
+    position: absolute;
+    top:  1rem;
+    left: 1rem;
+    font-size: 1.5rem;
+    text-decoration: none;
+    color: white;
+    background-color: #203565;
+    padding: 0.2rem 0.8rem;
+    border: 2px solid white;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 0 10px white;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    z-index: 10;
+  }
+
+  .pil-tilbake:hover {
+    background-color: #081220;
+    transform: scale(1.05);
   }
 
   .highscore-knapp {

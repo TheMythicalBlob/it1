@@ -1,51 +1,76 @@
 <script>
-  import { onMount } from 'svelte';
+  import { onMount } from 'svelte'
 
-  let highscores = [];
-  let kategorier = [];
+  let highscores = []
+  let kategorier = []
 
   // Hent highscores og kategori-navn
   onMount(async () => {
     try {
-      const res = await fetch("https://opentdb.com/api_category.php");
-      const data = await res.json();
+      const res = await fetch("https://opentdb.com/api_category.php")
+      const data = await res.json()
       for (const kat of data.trivia_categories) {
-        kategorier[kat.id.toString()] = kat.name;
+        kategorier[kat.id.toString()] = kat.name
       }
 
-      oppdaterHighscores();
+      oppdaterHighscores()
     } catch (error) {
-      console.error("Klarte ikke å hente poengoversikt:", error);
+      console.error("Klarte ikke å hente poengoversikt:", error)
     }
-  });
+  })
 
-  function oppdaterHighscores() {
-    const temp = [];
+  const oppdaterHighscores = () => {
+    const temp = []
     for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i);
+      const key = localStorage.key(i)
       if (key && key.startsWith("highscore-")) {
-        const [_, category, difficulty, type] = key.split("-");
-        const score = parseInt(localStorage.getItem(key));
+        const [_, category, difficulty, type] = key.split("-")
+        const score = parseInt(localStorage.getItem(key))
+        const max = parseInt(localStorage.getItem(`maxscore-${category}-${difficulty}-${type}`)) || 10
+        const prosent = (score / max) * 100
 
         temp.push({
           key,
           kategori: kategorier[category] || `Kategori ${category}`,
           difficulty,
           type,
-          score
-        });
+          score,
+          max,
+          prosent
+        })
       }
     }
-    highscores = temp.sort((a, b) => b.score - a.score);
+    highscores = temp.sort((a, b) => b.prosent - a.prosent)
   }
 
-  function slettHighscore(key) {
-    localStorage.removeItem(key);
-    oppdaterHighscores();
+  const slettHighscore = (key) => {
+    localStorage.removeItem(key)
+    const parts = key.split("-")
+    const maxKey = `maxscore-${parts[1]}-${parts[2]}-${parts[3]}`
+    localStorage.removeItem(maxKey)
+    oppdaterHighscores()
   }
+
+  const slettAlle = () => {
+  const nøkler = []
+
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i)
+    if (key?.startsWith("highscore-") || key?.startsWith("maxscore-")) {
+      nøkler.push(key)
+    }
+  }
+
+  for (const key of nøkler) {
+    localStorage.removeItem(key)
+  }
+
+  oppdaterHighscores();
+}
 </script>
 
 <main>
+  <button class="pil-tilbake" on:click={() => history.back()}>⬅</button>
   <div class="container">
     <h1>Highscore oversikt</h1>
 
@@ -66,10 +91,8 @@
               <td>{h.kategori}</td>
               <td>{h.difficulty}</td>
               <td>{h.type === "multiple" ? "Flervalg" : "Sant/Usant"}</td>
-              <td>{h.score}</td>
-              <td>
-                <button class="slett" on:click={() => slettHighscore(h.key)}>🗑</button>
-              </td>
+              <td>{h.score} / {h.max}</td>
+              <td><button class="slett" on:click={() => slettHighscore(h.key)}>🗑</button></td>
             </tr>
           {/each}
         </tbody>
@@ -79,9 +102,8 @@
     {/if}
 
     <div class="valg-knapper">
-      <a href="/">
-        <button class="tilbake-knapp">Tilbake til hovedmeny</button>
-      </a>
+      <a href="/"><button class="hovedmeny-knapp">Tilbake til hovedmeny</button></a>
+      <button class="slett-alle" on:click={slettAlle}>Slett alle</button>
     </div>
   </div>
 </main>
@@ -128,7 +150,7 @@
     background-color: #334155;
   }
 
-  .slett {
+  .slett, .slett-alle {
     background-color: #c9184a;
     color: white;
     border: none;
@@ -138,7 +160,7 @@
     border-radius: 5px;
   }
 
-  .slett:hover {
+  .slett:hover, .slett-alle:hover {
     background-color: #a0113b;
   }
 
@@ -149,18 +171,40 @@
     flex-wrap: wrap;
   }
 
-  .tilbake-knapp {
-    padding: 1rem 2rem;
-    background-color: #ff0000d4;
-    color: white;
+  .hovedmeny-knapp {
+    padding: 0.8rem 1.2rem;
+    background-color: #00ff08d8;
     border: none;
-    border-radius: 10px;
+    color: white;
+    border-radius: 8px;
+    font-size: 1.2rem;
     font-weight: bold;
     cursor: pointer;
-    transition: background-color 0.3s ease;
   }
 
-  .tilbake-knapp:hover {
-    background-color: #b30000 ;
+  .hovedmeny-knapp:hover {
+    background-color: #00cc00;
+  }
+
+  .pil-tilbake {
+    position: absolute;
+    top:  1rem;
+    left: 1rem;
+    font-size: 1.5rem;
+    text-decoration: none;
+    color: white;
+    background-color: #203565;
+    padding: 0.2rem 0.8rem;
+    border: 2px solid white;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 0 10px white;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    z-index: 10;
+  }
+
+  .pil-tilbake:hover {
+    background-color: #081220;
+    transform: scale(1.05);
   }
 </style>

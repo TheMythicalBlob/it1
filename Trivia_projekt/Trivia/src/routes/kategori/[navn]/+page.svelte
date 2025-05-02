@@ -2,57 +2,68 @@
   import { page } from '$app/stores'
   import { onMount } from 'svelte'
 
-  let kategoriId   = $page.params.navn
-  let antall       = 10
+  let kategoriId = $page.params.navn
+  let antall = 10
   let vanskelighetsgrad = "easy"
-  let typeSvar     = "multiple"
+  let typeSvar = "multiple"
   let kategoriNavn = ""
-  let feilmelding  = ""
-  let laster       = true
+  let feilmelding = ""
+  let laster = true
 
   const maksPerKategori = {
-    "10": { multiple: 50, boolean: 50 },
-    "11": { multiple: 50, boolean: 50 },
-    "12": { multiple: 50, boolean: 50 },
-    "13": { multiple: 15, boolean: 15 },
-    "14": { multiple: 50, boolean: 50 },
-    "15": { multiple: 50, boolean: 50 },
-    "16": { multiple: 50, boolean: 50 },
-    "17": { multiple: 50, boolean: 50 },
-    "18": { multiple: 50, boolean: 50 },
-    "19": { multiple: 20, boolean: 50 },
-    "20": { multiple: 15, boolean: 15 },
-    "21": { multiple: 50, boolean: 50 },
-    "22": { multiple: 50, boolean: 50 },
-    "23": { multiple: 50, boolean: 50 },
-    "24": { multiple: 4,  boolean: 10 },
-    "25": { multiple: 50, boolean: 50 },
-    "26": { multiple: 15, boolean: 15 },
-    "27": { multiple: 50, boolean: 50 },
-    "28": { multiple: 15, boolean: 15 },
-    "29": { multiple: 15, boolean: 15 },
-    "30": { multiple: 10, boolean: 10 },
-    "31": { multiple: 50, boolean: 50 },
-    "32": { multiple: 50, boolean: 50 }
-  }
+  "10": { multiple: 50, boolean: 50 },  // Bøker
+  "11": { multiple: 50, boolean: 50 },  // Film
+  "12": { multiple: 50, boolean: 50 },  // Musikk
+  "13": { multiple: 15, boolean: 15 },  // Musikaler og teater
+  "14": { multiple: 50, boolean: 50 },  // TV
+  "15": { multiple: 50, boolean: 50 },  // Videospill
+  "16": { multiple: 50, boolean: 50 },  // Brettspill
+  "17": { multiple: 50, boolean: 50 },  // Vitenskap og natur
+  "18": { multiple: 50, boolean: 50 },  // Datavitenskap
+  "19": { multiple: 20, boolean: 50 },  // Matematikk
+  "20": { multiple: 15, boolean: 15 },  // Mythologi
+  "21": { multiple: 50, boolean: 50 },  // Sport
+  "22": { multiple: 50, boolean: 50 },  // Geografi
+  "23": { multiple: 50, boolean: 50 },  // Historie
+  "24": { multiple: 4,  boolean: 10 },  // Politikk
+  "25": { multiple: 50, boolean: 50 },  // Kunst
+  "26": { multiple: 15, boolean: 15 },  // Kjendiser
+  "27": { multiple: 50, boolean: 50 },  // Dyr
+  "28": { multiple: 15, boolean: 15 },  // Kjøretøy
+  "29": { multiple: 15, boolean: 15 },  // Tegneserier
+  "30": { multiple: 10, boolean: 10 },  // Gadgets
+  "31": { multiple: 50, boolean: 50 },  // Anime og manga
+  "32": { multiple: 50, boolean: 50 }   // Tegneserier og animasjoner
+}
+
 
   onMount(async () => {
     try {
       const res = await fetch("https://opentdb.com/api_category.php")
+      if (!res.ok) throw new Error("Kunne ikke laste kategorier")
       const data = await res.json()
       const kategori = data.trivia_categories.find(k => k.id.toString() === kategoriId)
       kategoriNavn = kategori ? kategori.name : `Kategori ${kategoriId}`
+      
+      if ($page.url.searchParams.get('error')) {
+        feilmelding = decodeURIComponent($page.url.searchParams.get('error'))
+      }
     } catch (e) {
       kategoriNavn = `Kategori ${kategoriId}`
       console.error("Feil under lasting av kategori:", e)
+      feilmelding = "Kunne ikke laste kategoridata"
     } finally {
       laster = false
     }
   })
 
   const startQuiz = () => {
-    const url = `/trivia_kategorier?amount=${antall}&category=${kategoriId}&difficulty=${vanskelighetsgrad}&type=${typeSvar}`
-    window.location.href = url
+  const grenser = maksPerKategori[kategoriId]
+  const maks = grenser ? grenser[typeSvar] : 50
+  const valgtAntall = Math.min(antall, maks)
+
+  const url = `/trivia_kategorier?amount=${valgtAntall}&category=${kategoriId}&difficulty=${vanskelighetsgrad}&type=${typeSvar}`
+  window.location.href = url
   }
 
   $: {
@@ -68,6 +79,7 @@
 </script>
 
 <main>
+  <button class="pil-tilbake" on:click={() => history.back()}>⬅</button>
   <div class="container">
     {#if laster}
       <p class="lastetekst">Laster kategori…</p>
@@ -109,8 +121,6 @@
       {/if}
 
       <button class="start-knapp" on:click={startQuiz}>Start quiz</button>
-
-      <!-- Her kommer de to nye knappene: -->
       <div class="valg-knapper">
         <a href="/"><button class="tilbake-knapp">Tilbake til hovedmeny</button></a>
         <a href="/poeng_oversikt"><button class="highscore-knapp">Se highscores</button></a>
@@ -237,5 +247,27 @@
 
   .tilbake-knapp:hover {
     background-color: #757575;
+  }
+
+  .pil-tilbake {
+    position: absolute;
+    top:  1rem;
+    left: 1rem;
+    font-size: 1.5rem;
+    text-decoration: none;
+    color: white;
+    background-color: #203565;
+    padding: 0.2rem 0.8rem;
+    border: 2px solid white;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 0 10px white;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    z-index: 10;
+  }
+
+  .pil-tilbake:hover {
+    background-color: #081220;
+    transform: scale(1.05);
   }
 </style>
