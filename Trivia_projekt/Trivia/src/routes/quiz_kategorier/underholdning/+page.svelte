@@ -4,7 +4,10 @@
     { navn: "Film", id: 11 },
     { navn: "Musikk", id: 12 },
     { navn: "Musikaler og teater", id: 13 },
-    { navn: "TV", id: 14 }
+    { navn: "TV", id: 14 },
+    { navn: "Japanese Anime & Manga", id: 31 },
+    { navn: "Cartoon & Animations", id: 32 }
+
   ]
 </script>
 
@@ -53,7 +56,7 @@
     box-shadow: 0 0 30px white;
     padding: 3rem 2rem;
     width: 100%;
-    max-width: 500px;
+    max-width: 700px;
     text-align: center;
   }
 
@@ -104,7 +107,6 @@
     cursor: pointer;
     box-shadow: 0 0 10px white;
     transition: background-color 0.2s ease, transform 0.2s ease;
-    z-index: 10;
   }
 
   .pil-tilbake:hover {

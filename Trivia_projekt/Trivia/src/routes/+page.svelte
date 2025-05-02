@@ -31,7 +31,7 @@
   }
 
   .container {
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0,);
     padding: 3rem 2rem;
     border-radius: 20px;
     box-shadow: 0 0 20px rgba(0,0,0,0.4);

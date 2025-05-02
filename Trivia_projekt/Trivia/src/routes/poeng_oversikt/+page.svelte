@@ -4,73 +4,55 @@
   let highscores = []
   let kategorier = []
 
-  // Hent highscores og kategori-navn
   onMount(async () => {
     try {
       const res = await fetch("https://opentdb.com/api_category.php")
       const data = await res.json()
-      for (const kat of data.trivia_categories) {
-        kategorier[kat.id.toString()] = kat.name
-      }
-
+      data.trivia_categories.forEach(k => kategorier[k.id] = k.name)
       oppdaterHighscores()
-    } catch (error) {
-      console.error("Klarte ikke å hente poengoversikt:", error)
+    } catch (e) {
+      console.error("Feil ved henting av kategorier:", e)
     }
   })
 
   const oppdaterHighscores = () => {
     const temp = []
+
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i)
-      if (key && key.startsWith("highscore-")) {
-        const [_, category, difficulty, type] = key.split("-")
-        const score = parseInt(localStorage.getItem(key))
-        const max = parseInt(localStorage.getItem(`maxscore-${category}-${difficulty}-${type}`)) || 10
-        const prosent = (score / max) * 100
+      if (!key?.startsWith("highscore-")) continue
 
-        temp.push({
-          key,
-          kategori: kategorier[category] || `Kategori ${category}`,
-          difficulty,
-          type,
-          score,
-          max,
-          prosent
-        })
-      }
+      const [_, category, difficulty, type] = key.split("-")
+      const score = parseInt(localStorage.getItem(key))
+      const max = parseInt(localStorage.getItem(`maxscore-${category}-${difficulty}-${type}`)) || 10
+      const prosent = (score / max) * 100
+
+      temp.push({
+        key, kategori: kategorier[category] || `Kategori ${category}`,
+        difficulty, type, score, max, prosent
+      })
     }
+
     highscores = temp.sort((a, b) => b.prosent - a.prosent)
   }
 
   const slettHighscore = (key) => {
+    const [_, cat, diff, type] = key.split("-")
     localStorage.removeItem(key)
-    const parts = key.split("-")
-    const maxKey = `maxscore-${parts[1]}-${parts[2]}-${parts[3]}`
-    localStorage.removeItem(maxKey)
+    localStorage.removeItem(`maxscore-${cat}-${diff}-${type}`)
     oppdaterHighscores()
   }
 
   const slettAlle = () => {
-  const nøkler = []
-
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i)
-    if (key?.startsWith("highscore-") || key?.startsWith("maxscore-")) {
-      nøkler.push(key)
-    }
+    const keys = Object.keys(localStorage).filter(k => k.startsWith("highscore-") || k.startsWith("maxscore-"))
+    keys.forEach(k => localStorage.removeItem(k))
+    oppdaterHighscores()
   }
-
-  for (const key of nøkler) {
-    localStorage.removeItem(key)
-  }
-
-  oppdaterHighscores();
-}
 </script>
 
 <main>
   <button class="pil-tilbake" on:click={() => history.back()}>⬅</button>
+
   <div class="container">
     <h1>Highscore oversikt</h1>
 
@@ -108,6 +90,7 @@
   </div>
 </main>
 
+
 <style>
   main {
     display: flex;
@@ -120,7 +103,7 @@
   .container {
     background-color: #0f172a;
     border: 10px solid white;
-    border-radius: 5px;
+    border-radius: 8px;
     box-shadow: 0 0 30px white;
     padding: 2rem;
     width: 100%;
@@ -150,18 +133,30 @@
     background-color: #334155;
   }
 
+  .slett, .slett-alle, .hovedmeny-knapp {
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    color: white;
+  }
+
   .slett, .slett-alle {
     background-color: #c9184a;
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
-    cursor: pointer;
-    border-radius: 5px;
   }
 
   .slett:hover, .slett-alle:hover {
     background-color: #a0113b;
+  }
+
+  .hovedmeny-knapp {
+    background-color: #00ff08d8;
+  }
+
+  .hovedmeny-knapp:hover {
+    background-color: #00cc00;
   }
 
   .valg-knapper {
@@ -171,36 +166,19 @@
     flex-wrap: wrap;
   }
 
-  .hovedmeny-knapp {
-    padding: 0.8rem 1.2rem;
-    background-color: #00ff08d8;
-    border: none;
-    color: white;
-    border-radius: 8px;
-    font-size: 1.2rem;
-    font-weight: bold;
-    cursor: pointer;
-  }
-
-  .hovedmeny-knapp:hover {
-    background-color: #00cc00;
-  }
-
   .pil-tilbake {
     position: absolute;
-    top:  1rem;
+    top: 1rem;
     left: 1rem;
     font-size: 1.5rem;
-    text-decoration: none;
-    color: white;
     background-color: #203565;
+    color: white;
     padding: 0.2rem 0.8rem;
     border: 2px solid white;
     border-radius: 8px;
     cursor: pointer;
     box-shadow: 0 0 10px white;
     transition: background-color 0.2s ease, transform 0.2s ease;
-    z-index: 10;
   }
 
   .pil-tilbake:hover {
@@ -208,3 +186,4 @@
     transform: scale(1.05);
   }
 </style>
+

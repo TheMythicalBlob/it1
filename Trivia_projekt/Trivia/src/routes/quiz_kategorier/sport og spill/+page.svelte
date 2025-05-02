@@ -117,7 +117,6 @@
     cursor: pointer;
     box-shadow: 0 0 10px white;
     transition: background-color 0.2s ease, transform 0.2s ease;
-    z-index: 10;
   }
 
   .pil-tilbake:hover {

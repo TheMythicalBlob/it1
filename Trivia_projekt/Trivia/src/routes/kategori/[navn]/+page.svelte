@@ -36,34 +36,24 @@
   "32": { multiple: 50, boolean: 50 }   // Tegneserier og animasjoner
 }
 
-
   onMount(async () => {
     try {
       const res = await fetch("https://opentdb.com/api_category.php")
-      if (!res.ok) throw new Error("Kunne ikke laste kategorier")
       const data = await res.json()
       const kategori = data.trivia_categories.find(k => k.id.toString() === kategoriId)
-      kategoriNavn = kategori ? kategori.name : `Kategori ${kategoriId}`
-      
-      if ($page.url.searchParams.get('error')) {
-        feilmelding = decodeURIComponent($page.url.searchParams.get('error'))
-      }
-    } catch (e) {
-      kategoriNavn = `Kategori ${kategoriId}`
-      console.error("Feil under lasting av kategori:", e)
-      feilmelding = "Kunne ikke laste kategoridata"
+      kategoriNavn = kategori?.name || `Kategori ${kategoriId}`
     } finally {
       laster = false
     }
   })
 
   const startQuiz = () => {
-  const grenser = maksPerKategori[kategoriId]
-  const maks = grenser ? grenser[typeSvar] : 50
-  const valgtAntall = Math.min(antall, maks)
+    const grenser = maksPerKategori[kategoriId]
+    const maks = grenser ? grenser[typeSvar] : 50
+    const valgtAntall = Math.min(antall, maks)
 
-  const url = `/trivia_kategorier?amount=${valgtAntall}&category=${kategoriId}&difficulty=${vanskelighetsgrad}&type=${typeSvar}`
-  window.location.href = url
+    const url = `/trivia_kategorier?amount=${valgtAntall}&category=${kategoriId}&difficulty=${vanskelighetsgrad}&type=${typeSvar}`
+    window.location.href = url
   }
 
   $: {
@@ -82,23 +72,13 @@
   <button class="pil-tilbake" on:click={() => history.back()}>⬅</button>
   <div class="container">
     {#if laster}
-      <p class="lastetekst">Laster kategori…</p>
+      <p>Laster kategori…</p>
     {:else}
       <h1>{kategoriNavn}</h1>
-      <p>Velg dine quiz-innstillinger:</p>
-
       <label>
         Antall spørsmål:
-        <input
-          type="number"
-          min="1"
-          max={typeSvar === "multiple"
-            ? (maksPerKategori[kategoriId]?.multiple || 50)
-            : (maksPerKategori[kategoriId]?.boolean  || 50)}
-          bind:value={antall}
-        />
+        <input type="number" min="1" bind:value={antall} />
       </label>
-
       <label>
         Vanskelighetsgrad:
         <select bind:value={vanskelighetsgrad}>
@@ -107,7 +87,6 @@
           <option value="hard">Vanskelig</option>
         </select>
       </label>
-
       <label>
         Type spørsmål:
         <select bind:value={typeSvar}>
@@ -115,11 +94,9 @@
           <option value="boolean">Sant / Usant</option>
         </select>
       </label>
-
       {#if feilmelding}
         <p class="feilmelding">{feilmelding}</p>
       {/if}
-
       <button class="start-knapp" on:click={startQuiz}>Start quiz</button>
       <div class="valg-knapper">
         <a href="/"><button class="tilbake-knapp">Tilbake til hovedmeny</button></a>
@@ -156,18 +133,13 @@
     display: flex;
     flex-direction: column;
     gap: 1.2rem;
-    text-align: center;
     color: white;
+    text-align: center;
   }
 
   h1 {
-    font-size: 2rem;
     margin-bottom: 0.5rem;
-  }
-
-  p {
-    margin-bottom: 1rem;
-    color: #cbd5e1;
+    font-size: 2rem;
   }
 
   label {
@@ -187,19 +159,41 @@
     font-size: 1rem;
   }
 
-  .start-knapp {
-    padding: 1rem;
-    font-size: 1rem;
-    background-color: #0070f3;
-    color: white;
+  .start-knapp,
+  .tilbake-knapp,
+  .highscore-knapp {
+    padding: 0.8rem 1.6rem;
     border: none;
     border-radius: 8px;
-    cursor: pointer;
     font-weight: bold;
+    cursor: pointer;
+  }
+
+  .start-knapp {
+    background-color: #0070f3;
+    color: white;
   }
 
   .start-knapp:hover {
     background-color: #0059c1;
+  }
+
+  .tilbake-knapp {
+    background-color: #ff0000d4;
+    color: white;
+  }
+
+  .tilbake-knapp:hover {
+    background-color: #b30000;
+  }
+
+  .highscore-knapp {
+    background-color: #00ff08d8;
+    color: white;
+  }
+
+  .highscore-knapp:hover {
+    background-color: #388e3c;
   }
 
   .feilmelding {
@@ -209,54 +203,21 @@
     border-radius: 8px;
   }
 
-  .lastetekst {
-    color: #ccc;
-  }
-
   .valg-knapper {
     display: flex;
     justify-content: center;
     gap: 1rem;
-    margin-top: 1.5rem;
     flex-wrap: wrap;
-  }
-
-  .highscore-knapp {
-    padding: 0.8rem 1.6rem;
-    background-color: #00ff08d8;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-  }
-
-  .highscore-knapp:hover {
-    background-color: #388e3c;
-  }
-
-  .tilbake-knapp {
-    padding: 0.8rem 1.6rem;
-    background-color: #ff0000d4;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-  }
-
-  .tilbake-knapp:hover {
-    background-color: #757575;
+    margin-top: 1.5rem;
   }
 
   .pil-tilbake {
     position: absolute;
-    top:  1rem;
+    top: 1rem;
     left: 1rem;
     font-size: 1.5rem;
-    text-decoration: none;
-    color: white;
     background-color: #203565;
+    color: white;
     padding: 0.2rem 0.8rem;
     border: 2px solid white;
     border-radius: 8px;
@@ -271,3 +232,4 @@
     transform: scale(1.05);
   }
 </style>
+

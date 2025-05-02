@@ -1,23 +1,25 @@
 <script>
-  const samfunnQuiz = [
-    { navn: "Geografi", id: 22 },
-    { navn: "Historie", id: 23 },
-    { navn: "Politikk", id: 24 },
-    { navn: "Kunst", id: 25 },
-    { navn: "Dyr", id: 27 },
-    { navn: "Mythologi", id: 20 },
-    { navn: "Sport", id: 21 },
-    { navn: "Brettspill", id: 16 },
-    { navn: "Videospill", id: 15 },
-    { navn: "Bøker", id: 10 },
-    { navn: "Film", id: 11 },
-    { navn: "Musikk", id: 12 },
-    { navn: "Musikaler og teater", id: 13 },
-    { navn: "TV", id: 14 },
-    { navn: "Vitenskap og natur", id: 17 },
-    { navn: "Datavitenskap", id: 18 },
-    { navn: "Matematikk", id: 19 }
-  ];
+  const alleQuiz = [
+  { navn: "Brettspill", id: 16 },
+  { navn: "Bøker", id: 10 },
+  { navn: "Cartoon & Animations", id: 32 },
+  { navn: "Datavitenskap", id: 18 },
+  { navn: "Dyr", id: 27 },
+  { navn: "Film", id: 11 },
+  { navn: "Geografi", id: 22 },
+  { navn: "Historie", id: 23 },
+  { navn: "Japanese Anime & Manga", id: 31 },
+  { navn: "Kunst", id: 25 },
+  { navn: "Matematikk", id: 19 },
+  { navn: "Musikaler og teater", id: 13 },
+  { navn: "Musikk", id: 12 },
+  { navn: "Mythologi", id: 20 },
+  { navn: "Politikk", id: 24 },
+  { navn: "Sport", id: 21 },
+  { navn: "TV", id: 14 },
+  { navn: "Videospill", id: 15 },
+  { navn: "Vitenskap og natur", id: 17 }
+]
 </script>
 
 <main>
@@ -27,7 +29,7 @@
     <p>Velg en quiz:</p>
 
     <div class="quiz-valg">
-      {#each samfunnQuiz as quiz}
+      {#each alleQuiz as quiz}
         <a href={`/kategori/${quiz.id}`}>
           <button>{quiz.navn}</button>
         </a>
@@ -64,7 +66,7 @@
     border-radius: 10px;
     box-shadow: 0 0 30px white;
     padding: 2.5rem;
-    max-width: 700px;
+    max-width: 900px;
     width: 100%;
     text-align: center;
     color: white;
