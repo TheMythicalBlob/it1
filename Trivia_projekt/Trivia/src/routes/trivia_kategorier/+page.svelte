@@ -1,84 +1,96 @@
 <script>
-  import { page } from '$app/stores';
-  import { onMount } from 'svelte';
-  import { get } from 'svelte/store';
+  import { page } from '$app/stores'
+  import { onMount } from 'svelte'
+  import { get } from 'svelte/store'
 
-  const params = get(page).url.searchParams;
-  const antall = +params.get("amount") || 10;
-  const kategoriId = params.get("category");
-  const vanskelighetsgrad = params.get("difficulty");
-  const typeSvar = params.get("type");
-  const scoreNokkel = `highscore-${kategoriId}-${vanskelighetsgrad}-${typeSvar}`;
-  const maxNokkel = `maxscore-${kategoriId}-${vanskelighetsgrad}-${typeSvar}`;
+  const params = get(page).url.searchParams
+  const antall = +params.get("amount") || 10
+  const kategoriId = params.get("category")
+  const vanskelighetsgrad = params.get("difficulty")
+  const typeSvar = params.get("type")
+  const scoreNokkel = `highscore-${kategoriId}-${vanskelighetsgrad}-${typeSvar}`
+  const maxNokkel = `maxscore-${kategoriId}-${vanskelighetsgrad}-${typeSvar}`
 
-  let valgtKategori = "", spørsmål = [], indeks = 0, poeng = 0, hoyestePoeng = 0;
-  let valgtSvar = '', visTilbakemelding = false, visResultat = false, laster = true, error = null;
+  let valgtKategori = "", spørsmål = [], indeks = 0, poeng = 0, hoyestePoeng = 0
+  let valgtSvar = '', visTilbakemelding = false, visResultat = false, laster = true, error = null
+  let lydRiktig, lydFeil
 
   const dekod = t => {
-    const el = document.createElement("textarea");
-    el.innerHTML = t;
-    return el.value;
-  };
+    const el = document.createElement("textarea")
+    el.innerHTML = t
+    return el.value
+  }
 
-  const stokk = arr => [...arr].sort(() => Math.random() - 0.5);
+  const stokk = arr => [...arr].sort(() => Math.random() - 0.5)
 
   onMount(async () => {
-    try {
-      const res = await fetch(`https://opentdb.com/api.php?amount=${antall}&category=${kategoriId}&difficulty=${vanskelighetsgrad}&type=${typeSvar}`);
-      const data = await res.json();
-      if (!data.results?.length) throw new Error("Ingen spørsmål funnet");
+    lydRiktig = new Audio('/correct_sound.mp3')
+    lydFeil = new Audio('/wrong_sound.mp3')
 
-      const katRes = await fetch("https://opentdb.com/api_category.php");
-      const katData = await katRes.json();
-      valgtKategori = katData.trivia_categories.find(k => k.id == kategoriId)?.name || `Kategori ${kategoriId}`;
+    try {
+      const res = await fetch(`https://opentdb.com/api.php?amount=${antall}&category=${kategoriId}&difficulty=${vanskelighetsgrad}&type=${typeSvar}`)
+      const data = await res.json()
+      if (!data.results?.length) throw new Error("Ingen spørsmål funnet")
+
+      const katRes = await fetch("https://opentdb.com/api_category.php")
+      const katData = await katRes.json()
+      valgtKategori = katData.trivia_categories.find(k => k.id == kategoriId)?.name || `Kategori ${kategoriId}`
 
       spørsmål = data.results.map(q => {
-        const riktig = dekod(q.correct_answer);
-        const gale = q.incorrect_answers.map(dekod);
+        const riktig = dekod(q.correct_answer)
+        const gale = q.incorrect_answers.map(dekod)
         return {
           spørsmåltekst: dekod(q.question),
           riktig,
           svaralternativer: q.type === "boolean" ? ["True", "False"] : stokk([riktig, ...gale])
-        };
-      });
+        }
+      })
 
-      hoyestePoeng = +localStorage.getItem(scoreNokkel) || 0;
+      hoyestePoeng = +localStorage.getItem(scoreNokkel) || 0
     } catch (e) {
-      console.error("Feil:", e);
-      error = e.message;
+      console.error("Feil:", e)
+      error = e.message
     } finally {
-      laster = false;
+      laster = false
     }
-  });
+  })
 
   const svar = valg => {
-    if (visTilbakemelding) return;
-    valgtSvar = valg;
-    visTilbakemelding = true;
-    if (valg === spørsmål[indeks].riktig) poeng++;
+    if (visTilbakemelding) return
+    valgtSvar = valg
+    visTilbakemelding = true
+
+    if (valg === spørsmål[indeks].riktig) {
+      poeng++
+      lydRiktig.play()
+    } else {
+      lydFeil.play()
+    }
 
     setTimeout(() => {
-      valgtSvar = '';
-      visTilbakemelding = false;
-      indeks++;
-      if (indeks >= spørsmål.length) {
-        visResultat = true;
+      valgtSvar = ''
+      visTilbakemelding = false
+      indeks++
 
-        const prosent = (poeng / spørsmål.length) * 100;
-        const lagretPoeng = +localStorage.getItem(scoreNokkel) || 0;
-        const lagretMaks = +localStorage.getItem(maxNokkel) || 0;
-        const lagretProsent = lagretMaks ? (lagretPoeng / lagretMaks) * 100 : -1;
+      if (indeks >= spørsmål.length) {
+        visResultat = true
+
+        const prosent = (poeng / spørsmål.length) * 100
+        const lagretPoeng = +localStorage.getItem(scoreNokkel) || 0
+        const lagretMaks = +localStorage.getItem(maxNokkel) || 0
+        const lagretProsent = lagretMaks ? (lagretPoeng / lagretMaks) * 100 : -1
 
         if (lagretProsent === -1 || prosent > lagretProsent) {
-          localStorage.setItem(scoreNokkel, poeng);
-          localStorage.setItem(maxNokkel, spørsmål.length);
+          localStorage.setItem(scoreNokkel, poeng)
+          localStorage.setItem(maxNokkel, spørsmål.length)
         }
 
-        localStorage.setItem("lastScore", poeng);
+        localStorage.setItem("lastScore", poeng)
       }
-    }, 1200);
-  };
+    }, 1500)
+  }
 </script>
+
 
 {#if laster}
   <main><p>Laster spørsmål...</p></main>
@@ -164,7 +176,7 @@ p {
 }
 
 .answers {
-  display: flex;
+  display: flex;  
   flex-direction: column;
   gap: 1rem;
   margin: 2rem 0;
