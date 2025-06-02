@@ -1,4 +1,5 @@
 <main>
+  <title>Trivia</title>
   <div class="container">
     <h1>Velkommen til Trivia-nettsiden!</h1>
     <p>Hva vil du gjøre?</p>

@@ -9,6 +9,7 @@
 </script>
 
 <main>
+  <title>Trivia</title>
   <a href="/" class="pil-tilbake">⬅</a>
   <div class="container">
     <h1>Velg en quizkategori</h1>
